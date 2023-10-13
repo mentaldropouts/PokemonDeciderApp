@@ -1,16 +1,30 @@
+@font-face {
+  font-family: 'Pokemon-GB';
+  src: url('../public/fonts/Pokemon-GB.ttf') format('truetype');
+  /* You may specify other font properties like font-weight, font-style, etc. */
+}
+
+html{
+  width: 100%;
+  height: 100%;
+  background-color: #282c34;
+  color: white;
+}
+
 .App {
-  text-align: center;
+  font-family: Pokemon-GB;
+  background-color: #282c34;
+  color: white;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.header{
+  width:100%;
+  height: fit-content;
+  background-color: #83b1da;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .App-header {
@@ -24,15 +38,38 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+.dropdownCont{
+  display: flex;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dropdownCol{
+  display:flex 1 1 ;
+  text-align: left;
+  width: fit-content;
+  height: fit-content;
+  padding: 20px;
+  background-color: #e75c37;
 }
+
+.dropdown{
+  width:auto;
+  font-size: medium;
+  height:auto;
+  padding: 20px;
+  gap: 20px;
+  margin: 20px;
+}
+
+.statsholder{
+  padding: 1%;
+  display:flex;
+  text-align: justify;
+}
+
+.typeholder{
+  display: flex 1;
+  padding: 1%;
+  width: 100%
+}
+
