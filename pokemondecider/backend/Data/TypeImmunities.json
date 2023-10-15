@@ -1,0 +1,36 @@
+{
+    "Normal": [
+        "Ghost"
+    ],
+    "Fire": [],
+    "Water": [],
+    "Electric": [
+        "Ground"
+    ],
+    "Grass": [],
+    "Ice": [],
+    "Fighting": [
+        "Ghost"
+    ],
+    "Poison": [
+        "Steel"
+    ],
+    "Ground": [
+        "Flying"
+    ],
+    "Flying": [],
+    "Psychic": [
+        "Dark"
+    ],
+    "Bug": [],
+    "Rock": [],
+    "Ghost": [
+        "Normal"
+    ],
+    "Dragon": [
+        "Fairy"
+    ],
+    "Dark": [],
+    "Steel": [],
+    "Fairy": []
+}
