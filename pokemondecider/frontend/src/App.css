@@ -61,6 +61,12 @@ html{
   margin: 20px;
 }
 
+.col{
+  text-align: left;
+  width: 100%;
+  padding:1%
+}
+
 .statsholder{
   padding: 1%;
   display:flex;

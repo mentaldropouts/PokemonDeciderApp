@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
 
@@ -51,6 +51,7 @@ function PokemonDropdown() {
           <div>
             <div>Selected Pokemon: {selectedPokemon} </div>
             <div>Total: {selectedTotal}</div>
+            <div>ID: {selectedID}</div>
             <div class="statsholder">
               <div class="col">
                 <div>HP: {selectedHP}</div>
