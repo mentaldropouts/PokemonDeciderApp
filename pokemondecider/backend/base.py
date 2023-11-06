@@ -6,12 +6,12 @@ from zAlgs import createTeamDriver
 # data that results into a response body that will then be handled by the react 
 # front end. I made a file in the frontend called "handler.js" that shows how this
 # process is done.
+
 print("Starting Backend")
 
 api = Flask(__name__)
 
 @api.route('/test')
 def randomTeam():
-    response_body = createTeamDriver() 
-    
+    response_body = createTeamDriver()
     return response_body
