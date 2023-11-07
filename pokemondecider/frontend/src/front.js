@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
 
@@ -14,6 +14,7 @@ function PokemonDropdown() {
     const [selectedSpeed, setSelectedSpeed] = useState("")  
     const [selectedType1, setSelectedType1] = useState("")
     const [selectedType2, setSelectedType2] = useState("")
+    const [selectedImage, setSelectedImage] = useState("")
 
     // handles dropdown operations
     const handleSelectChange = (event) => {
@@ -31,8 +32,20 @@ function PokemonDropdown() {
       // adding type
       setSelectedType1(typeData[ID][0])
       setSelectedType2(typeData[ID][1])
-
     };
+    useEffect(() => {
+      if (selectedID) {
+        console.log(0)
+        // Generate the image path based on the selectedID
+        const imagePath = `../pkmnSprites/pkmn${selectedID}.png`;
+        console.log(1)
+        setSelectedImage(imagePath);
+        console.log(imagePath)
+      } else {
+        //This is when MissingNo is selected and there is no image
+        setSelectedImage("");
+      }
+    }, [selectedID]);
 
     return (
         <div class="dropdown">
@@ -49,6 +62,7 @@ function PokemonDropdown() {
         </select>
         {selectedPokemon && (
           <div>
+            <div><img src={selectedImage} alt={selectedID}/></div>
             <div>Selected Pokemon: {selectedPokemon} </div>
             <div>Total: {selectedTotal}</div>
             <div>ID: {selectedID}</div>
