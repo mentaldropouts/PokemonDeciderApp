@@ -47,6 +47,9 @@ function PokemonDropdown() {
             </option>
           ))}
         </select>
+
+
+        <div class="statsholderContainer">
         {selectedPokemon && (
           <div>
             <div>Selected Pokemon: {selectedPokemon} </div>
@@ -70,10 +73,12 @@ function PokemonDropdown() {
             <div class="typeholder">
               <div> {selectedType1} {selectedType2}</div>
               
+            
             </div>  
           </div>
           
         )}
+        </div>
       </div>
     );
   }

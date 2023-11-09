@@ -1,25 +1,37 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from "axios"
 
+function Handler(props) {
+ 
+ const randKeys = [];
+ const [TeamData,SetTeamData] = useState();
 
-function Handler() {
- const [TeamData, setTeamData] = useState(null)
+ useEffect(() => {
+  getData();
+ }, []);
+
 
  function getData() {
    axios({
      method: "GET",
-     url:"/testTeam",
+     url:"/test",
    })
+   // Catching the data from the backend
    .then((response) => {
      const res =response.data
-     setTeamData(({
-        
+     const keys = Object.keys(res)
+     const data = keys.map(key => res[key]);
 
-       // THIS IS WHERE WE WILL HANDLE THE RESPONSE FROM THE BACKEND 
-       // INTO THE FRONT END
-       
-       }))
-   }).catch((error) => {
+    // If data then Set it to const
+    if (data){
+      SetTeamData(TeamData);
+      props.onTeamDataLoaded(data);
+    }
+  
+    // console.log(TeamData);
+  
+  // Error handling
+  }).catch((error) => {
      if (error.response) {
        console.log(error.response)
        console.log(error.response.status)
@@ -29,12 +41,11 @@ function Handler() {
 
    return (
     <div >
-        <p>To get your profile details: </p><button onClick={getData}>Click me</button>
-        {profileData && <div>
-              <p>Profile name: {profileData.profile_name}</p>
-              <p>About me: {profileData.about_me}</p>
-            </div>
-        }
+      {/* Random Button  */}
+      <p>Random</p><button onClick={getData}>Click me</button>
+
+
+
     </div>
   );
 }

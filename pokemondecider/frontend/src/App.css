@@ -38,6 +38,11 @@ html{
   color: white;
 }
 
+#pokemonSelect{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 2%;
+}
 
 .dropdownCont{
   display: flex;
@@ -46,23 +51,22 @@ html{
 .dropdownCol{
   display:flex 1 1 ;
   text-align: left;
-  width: fit-content;
-  height: fit-content;
+  max-width: 500px;
   padding: 20px;
   background-color: #e75c37;
 }
 
 .dropdown{
-  width:auto;
+  width: inherit !important;
   font-size: medium;
   height:auto;
-  padding: 20px;
+  padding: 5px;
   gap: 20px;
-  margin: 20px;
+  margin: 10px;
 }
 
 .col{
-  text-align: left;
+  text-align: center;
   width: 100%;
   padding:1%
 }
@@ -72,6 +76,15 @@ html{
   display:flex;
   text-align: justify;
 }
+
+.statsholderContainer{
+  display: flex 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
+}
+
 
 .typeholder{
   display: flex 1;
