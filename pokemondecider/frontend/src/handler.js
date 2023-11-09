@@ -10,7 +10,6 @@ function Handler(props) {
   getData();
  }, []);
 
-
  function getData() {
    axios({
      method: "GET",
@@ -18,7 +17,7 @@ function Handler(props) {
    })
    // Catching the data from the backend
    .then((response) => {
-     const res =response.data
+     const res = response.data
      const keys = Object.keys(res)
      const data = keys.map(key => res[key]);
 
@@ -43,8 +42,6 @@ function Handler(props) {
     <div >
       {/* Random Button  */}
       <p>Random</p><button onClick={getData}>Click me</button>
-
-
 
     </div>
   );

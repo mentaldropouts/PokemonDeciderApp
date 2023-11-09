@@ -34,7 +34,8 @@ function PokemonDropdown() {
       setSelectedType2(typeData[ID][1])
 
     };
-
+    // Defines the teammate number above the dropdown column
+    let pkmnCounter = 0;
     useEffect(() => {
       if (selectedID) {
         console.log(0);
@@ -51,6 +52,8 @@ function PokemonDropdown() {
 
     return (
         <div class="dropdown">
+        {/* Displays the team member number for UI clarity (improves input for users) */}
+        <div>Pokemon {pkmnCounter++}</div>
         {/* <h1>Pokemon Dropdown</h1> */}
         <label htmlFor="pokemonSelect"></label>
         <select id="pokemonSelect" onChange={handleSelectChange} value={selectedPokemon}>
@@ -63,7 +66,6 @@ function PokemonDropdown() {
             </option>
           ))}
         </select>
-
 
         <div class="statsholderContainer">
         {selectedPokemon && (
@@ -92,7 +94,6 @@ function PokemonDropdown() {
             <div class="typeholder">
               <div> {selectedType1} {selectedType2}</div>
               
-            
             </div>  
           </div>
           
