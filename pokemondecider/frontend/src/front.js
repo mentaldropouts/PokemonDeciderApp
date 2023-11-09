@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
 
@@ -14,6 +14,7 @@ function PokemonDropdown() {
     const [selectedSpeed, setSelectedSpeed] = useState("")  
     const [selectedType1, setSelectedType1] = useState("")
     const [selectedType2, setSelectedType2] = useState("")
+    const [selectedImage, setSelectedImage] = useState("")
 
     // handles dropdown operations
     const handleSelectChange = (event) => {
@@ -34,6 +35,20 @@ function PokemonDropdown() {
 
     };
 
+    useEffect(() => {
+      if (selectedID) {
+        console.log(0);
+        // Generate the image path based on the selectedID
+        const imagePath = `pkmnSprites/pkmn${selectedID}.png`;
+        console.log(1);
+        setSelectedImage(imagePath);
+        console.log(imagePath);
+      } else {
+        //This is when MissingNo is selected and there is no image
+        setSelectedImage("");
+      }
+    }, [selectedID])
+
     return (
         <div class="dropdown">
         {/* <h1>Pokemon Dropdown</h1> */}
@@ -41,6 +56,7 @@ function PokemonDropdown() {
         <select id="pokemonSelect" onChange={handleSelectChange} value={selectedPokemon}>
           <option value="">{selectedPokemon}</option>
           {Object.keys(statData).map((id) => (
+        
             // Putting the ID with the name so we can pull other info
             <option key={id} value={id}>
               {statData[id].Name}
@@ -51,7 +67,10 @@ function PokemonDropdown() {
 
         <div class="statsholderContainer">
         {selectedPokemon && (
+
           <div>
+            <div>
+              <img src={selectedImage} alt={selectedID}/></div>
             <div>Selected Pokemon: {selectedPokemon} </div>
             <div>Total: {selectedTotal}</div>
             <div>ID: {selectedID}</div>

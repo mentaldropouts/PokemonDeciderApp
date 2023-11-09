@@ -12,15 +12,12 @@ function App() {
   console.log(RandTeam);
   };
 
-
   return (
     <div className="App">
       <h1 class="header">Pokemon Decider</h1>
       
-
       {/* // Gives us access to the random team data */}
       <Handler onTeamDataLoaded={handleTeamDataLoaded}/>
-
 
       <div class="dropdownCont">
 
