@@ -35,12 +35,12 @@ function PokemonDropdown() {
     };
     useEffect(() => {
       if (selectedID) {
-        console.log(0)
+        console.log(0);
         // Generate the image path based on the selectedID
-        const imagePath = `../pkmnSprites/pkmn${selectedID}.png`;
-        console.log(1)
+        const imagePath = `pkmnSprites/pkmn${selectedID}.png`;
+        console.log(1);
         setSelectedImage(imagePath);
-        console.log(imagePath)
+        console.log(imagePath);
       } else {
         //This is when MissingNo is selected and there is no image
         setSelectedImage("");
@@ -62,7 +62,7 @@ function PokemonDropdown() {
         </select>
         {selectedPokemon && (
           <div>
-            <div><img src={selectedImage} alt={selectedID}/></div>
+            <div id='img'><img src={selectedImage} alt={selectedID}/></div>
             <div>Selected Pokemon: {selectedPokemon} </div>
             <div>Total: {selectedTotal}</div>
             <div>ID: {selectedID}</div>
