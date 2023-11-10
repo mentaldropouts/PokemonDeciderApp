@@ -23,6 +23,7 @@ html{
   background-color: #83b1da;
   padding: 30px;
   text-align: center;
+  margin-top: -10px;
 }
 
 .header2{
@@ -50,6 +51,8 @@ html{
   padding: 5px;
   background-color: grey;
   text-align: center;
+  font-size: small;
+  margin-top: -22px;
 }
 
 .infoBoxInternal{
@@ -106,3 +109,18 @@ html{
   width: 100%
 }
 
+.randomButton{
+  background-color: red;
+  color: white;
+  width: 10%;
+  height: 50px;
+  border-color: white;
+  border-radius: 5px;
+  border-style: outset;
+  cursor: grab;
+}
+
+.randomButton:active{
+  border-style: inset;
+  cursor: grabbing;
+}

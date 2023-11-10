@@ -38,11 +38,14 @@ function Handler(props) {
        }
    })}
 
+   // disabling button if full team is not already selected
+   
+
+   // creating button for randomizing the team
    return (
     <div >
       {/* Random Button  */}
-      <p>Random</p><button onClick={getData}>Click me</button>
-
+      <p>Select a Random Team</p><button class="randomButton" onClick={getData}>Randomize</button>
     </div>
   );
 }

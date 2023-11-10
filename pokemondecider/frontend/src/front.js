@@ -38,9 +38,10 @@ function PokemonDropdown() {
     return (
         <div class="dropdown">
         {/* Displays the team member number for UI clarity (improves input for users) */}
-        <div>Pokemon {pkmnCounter++}</div>
+        <div>Pokemon {pkmnCounter}</div>
         {/* <h1>Pokemon Dropdown</h1> */}
         <label htmlFor="pokemonSelect"></label>
+        {/* Select menu for selecting any of the imported pokemon */}
         <select id="pokemonSelect" onChange={handleSelectChange} value={selectedPokemon}>
           <option value="">{selectedPokemon}</option>
           {Object.keys(statData).map((id) => (
