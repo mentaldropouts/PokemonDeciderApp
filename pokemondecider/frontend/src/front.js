@@ -43,7 +43,9 @@ function PokemonDropdown() {
         console.log(imagePath);
       } else {
         //This is when MissingNo is selected and there is no image
-        setSelectedImage("");
+        const imagepath = `pkmnSprites/pkmn0.png`
+        setSelectedImage(imagepath);
+        console.log(setSelectedImage)
       }
     }, [selectedID]);
 
