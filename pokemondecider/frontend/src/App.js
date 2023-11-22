@@ -13,27 +13,22 @@ function App() {
   };
 
   return (
+
     <div className="App">
+
       <h1 class="header">Pokemon Decider</h1>
       
+          <div class="dropdownBack">
 
-      {/* // Gives us access to the random team data */}
-      <Handler onTeamDataLoaded={handleTeamDataLoaded}/>
+            <PokemonDropdown/><PokemonDropdown/><PokemonDropdown/><PokemonDropdown/><PokemonDropdown/>
 
-
-      <div class="dropdownCont">
-
-          <div class="dropdownCol">
-            <PokemonDropdown/><PokemonDropdown/><PokemonDropdown/>
           </div>
-      
-          <div class="dropdownCol">
-            <PokemonDropdown/><PokemonDropdown/>
+
+          <div class="buttonRow">
+          {/* // Gives us access to the random team data */}
+          <Handler onTeamDataLoaded={handleTeamDataLoaded}/>
           </div>
-      
-      </div>
-      {/* // Gives us access to the random team data */}
-      <Handler onTeamDataLoaded={handleTeamDataLoaded}/>
+
     </div>
   );
 }

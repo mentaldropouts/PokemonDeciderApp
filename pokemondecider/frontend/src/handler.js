@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import axios from "axios"
 
 function Handler(props) {
- 
  const randKeys = [];
  const [TeamData,SetTeamData] = useState();
 
@@ -38,14 +37,16 @@ function Handler(props) {
        }
    })}
 
-   // disabling button if full team is not already selected
-   
-
    // creating button for randomizing the team
    return (
     <div >
       {/* Random Button  */}
-      <p>Select a Random Team</p><button class="randomButton" onClick={getData}>Randomize</button>
+      <button class="Button" onClick={getData}>Randomize</button>
+      
+      {/* Submit Button  ( DOESNT HAVE A BINDING YET ) */} 
+      {/* <button class="Button" onClick={submitTeam}>Submit</button> */}
+
+
     </div>
   );
 }
