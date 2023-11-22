@@ -13,3 +13,8 @@ choice to make. For we will make it for them!
 
 * **Create by** : CS 498 Group
 
+to run:
+1. go to frontend folder
+2. use command "npm start" for frontend
+3. use command "npm run start-backend" for backend
+
