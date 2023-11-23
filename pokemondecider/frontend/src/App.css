@@ -128,16 +128,15 @@ html{
 
 .buttonRow{
   justify-content: center;
-  margin-left: 5%;
-  margin-right: 5%; 
+  margin-left: 37%;
+  margin-right: 0%; 
 }
 
 .Button{
   background-color:#e75c37;
-  border:none;
   font-family: Pokemon-GB;
   color: white;
-  width: 15%;
+  width: 20%;
   height: 50px;
   cursor: grab;
 }
@@ -167,4 +166,15 @@ html{
   height:fit-content;
 
 
+}
+
+.bestPokemon{
+  background-color: #e75c37;
+  background-size: 1500px;
+  height: 420px;
+  padding-bottom: 180px;
+  /* width: 100px; */
+  /* justify-content: center; */
+  /* margin-left: 10px; */
+  /* margin-right: 50px; */
 }

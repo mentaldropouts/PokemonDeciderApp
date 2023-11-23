@@ -9,27 +9,27 @@ function PokemonDropdown( ) {
     
     name: "MissingNo.",
 
-    id: "",
+    id: "0",
 
-    total: "",
+    total: "0",
 
-    hp: "",
+    hp: "0",
 
-    attack: "",
+    attack: "0",
 
-    defense: "",
+    defense: "0",
 
-    spAtk: "",
+    spAtk: "0",
 
-    spDef: "",
+    spDef: "0",
 
-    speed: "",
+    speed: "0",
 
     type1: "",
 
     type2: "",
 
-    image: "",
+    image: 'pkmnSprites/pkmn0.png',
 
   });
 

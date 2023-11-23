@@ -25,6 +25,9 @@ function App() {
             <PokemonDropdown/> <PokemonDropdown/> <PokemonDropdown/> <PokemonDropdown/> <PokemonDropdown/>
 
           </div>
+          <div class="bestPokemon">
+            <PokemonDropdown/>
+          </div>
 
           <div class="buttonRow">
           {/* // Gives us access to the random team data */}
