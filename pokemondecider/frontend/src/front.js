@@ -111,8 +111,10 @@ function PokemonDropdown() {
             
         <div class="imageContainer">
 
-          <img src={selectedImage} alt={selectedPokemon} />
 
+            <img class="image" src={selectedImage} alt={selectedPokemon} />
+            <div class="name"> {selectedPokemon}</div>
+            
         </div>
 
         {/* Stats for pokem */}
