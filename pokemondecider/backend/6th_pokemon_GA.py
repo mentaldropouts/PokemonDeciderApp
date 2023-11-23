@@ -4,6 +4,7 @@ import pandas as pd
 
 #Recommends Pokemon whose types are effective against the types that may be a threat to current team.
 def find_6th_best_pokemon(user_pokemon):
+    print("starting")
     best_6th_pokemon = None
     best_6th_stats = np.zeros(6)  # Initialize with zeros
 
@@ -82,11 +83,17 @@ def mutate(pokemon_team):
 
 #Reading and cleaning data
 gen1 = pd.read_csv('pokemon.csv').drop('#', axis=1)
+
 mask = gen1['Name'].str.startswith('Mega')
+
 gen1 = gen1[~mask]
+
 gen1 = gen1[gen1['Generation'] == 1].reset_index() #Generation 1
+
 gen1['Total'] = gen1['HP'] + gen1['Attack'] + gen1['Defense'] + gen1['Sp. Atk'] + gen1['Sp. Def'] + gen1['Speed']
+
 gen1['Type 2'].fillna('None', inplace=True)
+
 gen1.drop(['index', 'Generation', 'Legendary', 'Total'], axis=1, inplace=True)
 
 #Uncomment below to see data
@@ -162,5 +169,6 @@ best_6th_pokemon = find_6th_best_pokemon(user_pokemon)
 
 #Output
 print("Best 6th Pokemon for your team:", best_6th_pokemon)
+
 # print("Best Team: ", best_team)
 # print("Total Stats of Best Team: ", best_fitness)

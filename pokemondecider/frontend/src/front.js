@@ -1,76 +1,80 @@
 import { useState, useEffect } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
-function PokemonDropdown() {
+function PokemonDropdown( { props } ) {
 
 
-   
+  const [selectedPokemonData, setSelectedPokemonData] = useState({
+    name: "MissingNo.",
 
-    const [selectedPokemon, setSelectedPokemon] = useState("MissingNo."); // State to store the selected Pokemon
+    id: "",
 
-    const [selectedID, setSelectedID] = useState("");
+    total: "",
 
-    const [selectedTotal, setSelectedTotal] = useState("")
+    hp: "",
 
-    const [selectedHP, setSelectedHP] = useState("")
+    attack: "",
 
-    const [selectedAttack, setSelectedAttack] = useState("")
+    defense: "",
 
-    const [selectedDef, setSelectedDef] = useState("")
+    spAtk: "",
 
-    const [selectedSpA, setSelectedSpA] = useState("")
+    spDef: "",
 
-    const [selectedSpD, setSelectedSpD] = useState("")
+    speed: "",
 
-    const [selectedSpeed, setSelectedSpeed] = useState("")  
+    type1: "",
 
-    const [selectedType1, setSelectedType1] = useState("")
+    type2: "",
 
-    const [selectedType2, setSelectedType2] = useState("")
+    image: "",
 
-    const [selectedImage, setSelectedImage] = useState("")
-
-    const [shortedName, setShortenedName] = useState(selectedPokemon)
+  });
 
     // handles dropdown operations
-    const handleSlottingData = (event) => {
+  const handleSlottingData = (event) => {
 
-      const ID = event.target.value;
+  const ID = event.target.value;
 
-      console.log(ID)
+  setSelectedPokemonData({
 
-      setSelectedID(ID);
+    name: statData[ID].Name,
 
-      setSelectedPokemon(statData[ID].Name)
+    id: ID,
 
-      setSelectedTotal(statData[ID].Total)
+    total: statData[ID].Total,
 
-      setSelectedHP(statData[ID].HP)
+    hp: statData[ID].HP,
 
-      setSelectedAttack(statData[ID].Attack)
+    attack: statData[ID].Attack,
 
-      setSelectedDef(statData[ID].Defense)
+    defense: statData[ID].Defense,
 
-      setSelectedSpA(statData[ID].SpAtk)
+    spAtk: statData[ID].SpAtk,
 
-      setSelectedSpD(statData[ID].SpDef)
+    spDef: statData[ID].SpDef,
 
-      setSelectedSpeed(statData[ID].Speed)
+    speed: statData[ID].Speed,
 
-      setSelectedType1(typeData[ID][0])
+    type1: typeData[ID][0],
 
-      setSelectedType2(typeData[ID][1])
+    type2: typeData[ID][1],
 
-    };
+    image: `pkmnSprites/pkmn${ID}.png`
+
+
+    })
+  };
 
 
       // Shartending the name of the pokemon to be displayed
-      const handleDataChange = (event) => {
+      const onDataChange = (event) => {
 
         handleSlottingData(event);
-        
-        const words = selectedPokemon.split(' ')
-        console.log(words)
+
+        props.onDataToParent(selectedPokemonData);
+
+        // console.log(selectedPokemonData)
       };
 
     
@@ -80,23 +84,13 @@ function PokemonDropdown() {
 
     useEffect(() => {
 
-      if (selectedID) {
+      if (selectedPokemonData.id) {
 
-        // Generate the image path based on the selectedID
-        const imagePath = `pkmnSprites/pkmn${selectedID}.png`;
-
-        setSelectedImage(imagePath);
-
-        console.log(imagePath);
-
-      } else {
-
-        //This is when MissingNo is selected and there is no image
-        setSelectedImage(""); 
+        console.log(selectedPokemonData.image);
 
       }
 
-    }, [selectedID])
+    }, [selectedPokemonData.id])
 
     return (
 
@@ -107,9 +101,9 @@ function PokemonDropdown() {
         <label htmlFor="pokemonSelect"></label>
 
         {/* Select menu for selecting any of the imported pokemon */}
-        <select id="pokemonSelect" onChange={handleDataChange} value={selectedPokemon}>
+        <select id="pokemonSelect" onChange={onDataChange} value={selectedPokemonData.name}>
 
-          <option value="">{selectedPokemon}</option>
+          <option value="">{selectedPokemonData.name}</option>
 
           {Object.keys(statData).map((id) => (
 
@@ -126,14 +120,14 @@ function PokemonDropdown() {
             
         <div class="imageContainer">
 
-            <img class="image" src={selectedImage} alt={selectedPokemon} />
-            <div class="name"> {selectedPokemon}</div>
+            <img class="image" src={selectedPokemonData.image} alt={selectedPokemonData.name} />
+            <div class="name"> {selectedPokemonData.name}</div>
             
         </div>
 
         {/* Stats for pokem */}
 
-        {selectedPokemon && (
+        {selectedPokemonData && (
 
           <div>
 
@@ -145,21 +139,21 @@ function PokemonDropdown() {
 
               <div class="col">
 
-              <div class="statsGrouper"> Attack <div class="stats">{selectedAttack}</div></div>
+              <div class="statsGrouper"> Attack <div class="stats">{selectedPokemonData.attack}</div></div>
 
-                <div class="statsGrouper"> Defense <div class="stats">{selectedDef}</div></div>
+                <div class="statsGrouper"> Defense <div class="stats">{selectedPokemonData.defense}</div></div>
 
-               <div class="statsGrouper"> Total <div class="stats">{selectedTotal}</div></div>
+               <div class="statsGrouper"> Total <div class="stats">{selectedPokemonData.total}</div></div>
 
               </div>
 
               <div class="col">
                 
-                <div class="statsGrouper"> SpAtk <div class="stats">{selectedSpA}</div> </div>
+                <div class="statsGrouper"> SpAtk <div class="stats">{selectedPokemonData.spAtk}</div> </div>
 
-                <div class="statsGrouper"> SpDef <div class="stats">{selectedDef}</div></div>
+                <div class="statsGrouper"> SpDef <div class="stats">{selectedPokemonData.spDef}</div></div>
 
-                <div class="statsGrouper"> Speed <div class="stats">{selectedSpeed}</div></div>
+                <div class="statsGrouper"> Speed <div class="stats">{selectedPokemonData.speed}</div></div>
 
              </div>
 
@@ -167,7 +161,7 @@ function PokemonDropdown() {
 
             <div class="typeholder">
 
-              <div> {selectedType1} {selectedType2}</div>
+              <div> {selectedPokemonData.type1} {selectedPokemonData.type2}</div>
 
             </div>  
 

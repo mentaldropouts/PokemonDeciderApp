@@ -29,11 +29,11 @@ def createTeamArrLong(teamIDs, pokemonData, typeData):
 
 
 if __name__ == "__main__":
-    f = open('FullPokemonStats.json')
+    f = open('pokemondecider/backend/Data/FullPokemonStats.json')
     pokemonData = json.load(f)
     f.close()
 
-    f = open('FullPokemonTypes.json')
+    f = open('pokemondecider/backend/Data/FullPokemonTypes.json')
     typeData = json.load(f)
     f.close()
 

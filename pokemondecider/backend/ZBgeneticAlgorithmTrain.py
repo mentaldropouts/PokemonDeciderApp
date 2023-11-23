@@ -2,11 +2,11 @@ import pygad
 import numpy
 import json
 
-f = open('FullPokemonStats.json')
+f = open('pokemondecider/backend/Data/FullPokemonStats.json')
 pokemonData = json.load(f)
 f.close()
 
-f = open('FullPokemonTypes.json')
+f = open('pokemondecider/backend/Data/FullPokemonTypes.json')
 typeData = json.load(f)
 f.close()
 
