@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
-
 function PokemonDropdown() {
+
+
+   
 
     const [selectedPokemon, setSelectedPokemon] = useState("MissingNo."); // State to store the selected Pokemon
 
@@ -28,8 +30,10 @@ function PokemonDropdown() {
 
     const [selectedImage, setSelectedImage] = useState("")
 
+    const [shortedName, setShortenedName] = useState(selectedPokemon)
+
     // handles dropdown operations
-    const handleSelectChange = (event) => {
+    const handleSlottingData = (event) => {
 
       const ID = event.target.value;
 
@@ -59,6 +63,18 @@ function PokemonDropdown() {
 
     };
 
+
+      // Shartending the name of the pokemon to be displayed
+      const handleDataChange = (event) => {
+
+        handleSlottingData(event);
+        
+        const words = selectedPokemon.split(' ')
+        console.log(words)
+      };
+
+    
+
     // Defines the teammate number above the dropdown column
     let pkmnCounter = 0;
 
@@ -84,7 +100,6 @@ function PokemonDropdown() {
 
     return (
 
-        // Image Containers
         <div class="dropdown">
 
         {/* <div>Pokemon {pkmnCounter}</div> */}
@@ -92,7 +107,7 @@ function PokemonDropdown() {
         <label htmlFor="pokemonSelect"></label>
 
         {/* Select menu for selecting any of the imported pokemon */}
-        <select id="pokemonSelect" onChange={handleSelectChange} value={selectedPokemon}>
+        <select id="pokemonSelect" onChange={handleDataChange} value={selectedPokemon}>
 
           <option value="">{selectedPokemon}</option>
 
@@ -110,7 +125,6 @@ function PokemonDropdown() {
         </select>
             
         <div class="imageContainer">
-
 
             <img class="image" src={selectedImage} alt={selectedPokemon} />
             <div class="name"> {selectedPokemon}</div>
