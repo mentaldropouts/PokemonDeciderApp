@@ -3,7 +3,11 @@ import axios from "axios"
 
 const sendDataToBackend = async (data) => {
     try {
-      const response = await axios.post('/submit', data);
+
+      console.log(data);
+
+      // This post does not work
+      const response = await axios.post('http://localhost:5000/submit', data);
 
       console.log('Data sent successfully');
       // Handle success, if needed

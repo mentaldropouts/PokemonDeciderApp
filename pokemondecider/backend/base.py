@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from zAlgs import createTeamDriver
+from flask_cors import CORS
 
 # This is the basic set up for what we will be using to handle the pokemon data.
 # We will handle the data by calling Zach's Algorithms and then send the dict of 

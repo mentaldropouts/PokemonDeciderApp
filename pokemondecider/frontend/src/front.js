@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
-function PokemonDropdown( { props } ) {
+import sendDataToBackend from './submit'
 
+function PokemonDropdown( ) {
 
   const [selectedPokemonData, setSelectedPokemonData] = useState({
+    
     name: "MissingNo.",
 
     id: "",
@@ -69,15 +71,9 @@ function PokemonDropdown( { props } ) {
 
       // Shartending the name of the pokemon to be displayed
       const onDataChange = (event) => {
-
         handleSlottingData(event);
-
-        props.onDataToParent(selectedPokemonData);
-
-        // console.log(selectedPokemonData)
+        sendDataToBackend(selectedPokemonData);
       };
-
-    
 
     // Defines the teammate number above the dropdown column
     let pkmnCounter = 0;

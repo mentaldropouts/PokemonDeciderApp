@@ -14,6 +14,7 @@ function Handler(props) {
      method: "GET",
      url:"/test",
    })
+
    // Catching the data from the backend
    .then((response) => {
      const res = response.data
@@ -39,7 +40,9 @@ function Handler(props) {
 
    // creating button for randomizing the team
    return (
+
     <div >
+    
       {/* Random Button  */}
       <button class="Button" onClick={getData}>Randomize</button>
       
