@@ -3,7 +3,7 @@ import { statData } from "./Stats"
 import { typeData } from "./Types"
 import sendDataToBackend from './submit'
 
-function PokemonDropdown( {label} ) {
+function BestPokemon( ) {
 
   const [selectedPokemonData, setSelectedPokemonData] = useState({
     
@@ -30,8 +30,6 @@ function PokemonDropdown( {label} ) {
     type2: "",
 
     image: 'pkmnSprites/pkmn0.png',
-
-    label: {label}
 
   });
 
@@ -64,9 +62,7 @@ function PokemonDropdown( {label} ) {
 
     type2: typeData[ID][1],
 
-    image: `pkmnSprites/pkmn${ID}.png`,
-
-    label: {label}
+    image: `pkmnSprites/pkmn${ID}.png`
 
 
     })
@@ -75,9 +71,8 @@ function PokemonDropdown( {label} ) {
 
       // Shartending the name of the pokemon to be displayed
       const onDataChange = (event) => {
-
         handleSlottingData(event);
-        
+        sendDataToBackend(selectedPokemonData);
       };
 
     // Defines the teammate number above the dropdown column
@@ -87,22 +82,21 @@ function PokemonDropdown( {label} ) {
 
       if (selectedPokemonData.id) {
 
-        sendDataToBackend(selectedPokemonData, label);
+        console.log(selectedPokemonData.image);
 
       }
 
     }, [selectedPokemonData.id])
 
     return (
-
         <div class="dropdown">
 
-        <div>Pokemon {label}</div>
+        {/* <div>Pokemon {pkmnCounter}</div> */}
 
         <label htmlFor="pokemonSelect"></label>
 
         {/* Select menu for selecting any of the imported pokemon */}
-        <select id="pokemonSelect" onChange={onDataChange} value={selectedPokemonData.name}>
+        {/* <select id="pokemonSelect" onChange={onDataChange} value={selectedPokemonData.name}>
 
           <option value="">{selectedPokemonData.name}</option>
 
@@ -117,7 +111,10 @@ function PokemonDropdown( {label} ) {
 
           ))}
 
-        </select>
+        </select> */}
+        <div>
+            <h1>Hello</h1>
+        </div>
             
         <div class="imageContainer">
 
@@ -177,4 +174,4 @@ function PokemonDropdown( {label} ) {
 
   }
   
-  export default PokemonDropdown;
+  export default BestPokemon;
