@@ -2,6 +2,7 @@ import './App.css';
 import  PokemonDropdown  from "./front"
 import Handler from "./handler"
 import { useState } from'react';
+import BestPokemon from './front2';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
 
           </div>
           <div class="bestPokemon">
-            <PokemonDropdown/>
+            <BestPokemon/>
           </div>
 
           <div class="buttonRow">
