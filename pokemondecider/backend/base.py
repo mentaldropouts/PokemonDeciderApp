@@ -19,6 +19,7 @@ def randomTeam():
     return response_body
 
 
+pokemonTeam = {}
 
 @api.route('/submit', methods=['POST', 'OPTIONS'])
 def receive_data_from_frontend():
@@ -28,9 +29,9 @@ def receive_data_from_frontend():
     else:
         try:
             data_from_frontend = request.get_json()
+            print("DATA FROM BACKEND:\n", data_from_frontend)
             # Process the data as needed
             response = jsonify({'message': 'Data received and processed successfully'})
-            print(str(response))
         except Exception as e:
             print(f"An error occurred: {str(e)}")
             response = jsonify({'error': 'Internal Server Error'}), 500

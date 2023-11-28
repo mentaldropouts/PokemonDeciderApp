@@ -100,6 +100,7 @@ def calculateScore(members, pokemonTypes, typeStrengths, typeWeaknesses, typeLis
 # * takes a list of ID numbes and creates a team in the form of a dictionary that includes all the stats
 # * just like it is for other functions and is standard thus far
 # * works for any number of pokemon
+
 def createTeam(pokedexNumArr, dataSet):
     newTeam = {}
     for i in range(len(pokedexNumArr)):
@@ -112,6 +113,7 @@ def createTeam(pokedexNumArr, dataSet):
     return newTeam
 
 def createTeamDriver():
+
     print("Running createTeamDriver!")
     # Purpose: to handle the json files and utilitze those to create teams 
     # in a function that can be called externally by a flask route
@@ -167,9 +169,9 @@ def createTeamDriver():
 
     newTeam = createTeam(randomList,FULLPOKEMONSTATS)
 
-    for pokemon in newTeam:
-        print(pokemon,": ", newTeam[pokemon], end="\n")
-        print()
+    # for pokemon in newTeam:
+        # print(pokemon,": ", newTeam[pokemon], end="\n")
+        # print()
 
 
     return newTeam

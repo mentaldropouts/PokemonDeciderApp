@@ -22,7 +22,7 @@ function App() {
       
           <div class="dropdownBack">
 
-            <PokemonDropdown/> <PokemonDropdown/> <PokemonDropdown/> <PokemonDropdown/> <PokemonDropdown/>
+            <PokemonDropdown label="1"/> <PokemonDropdown label="2"/> <PokemonDropdown label="3"/> <PokemonDropdown label="4"/> <PokemonDropdown label="5"/>
 
           </div>
 

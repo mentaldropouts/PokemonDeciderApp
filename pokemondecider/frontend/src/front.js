@@ -3,7 +3,7 @@ import { statData } from "./Stats"
 import { typeData } from "./Types"
 import sendDataToBackend from './submit'
 
-function PokemonDropdown( ) {
+function PokemonDropdown( {label} ) {
 
   const [selectedPokemonData, setSelectedPokemonData] = useState({
     
@@ -30,6 +30,8 @@ function PokemonDropdown( ) {
     type2: "",
 
     image: "",
+
+    label: {label}
 
   });
 
@@ -62,7 +64,9 @@ function PokemonDropdown( ) {
 
     type2: typeData[ID][1],
 
-    image: `pkmnSprites/pkmn${ID}.png`
+    image: `pkmnSprites/pkmn${ID}.png`,
+
+    label: {label}
 
 
     })
@@ -71,8 +75,9 @@ function PokemonDropdown( ) {
 
       // Shartending the name of the pokemon to be displayed
       const onDataChange = (event) => {
+
         handleSlottingData(event);
-        sendDataToBackend(selectedPokemonData);
+        
       };
 
     // Defines the teammate number above the dropdown column
@@ -82,7 +87,7 @@ function PokemonDropdown( ) {
 
       if (selectedPokemonData.id) {
 
-        console.log(selectedPokemonData.image);
+        sendDataToBackend(selectedPokemonData, label);
 
       }
 
@@ -92,7 +97,7 @@ function PokemonDropdown( ) {
 
         <div class="dropdown">
 
-        {/* <div>Pokemon {pkmnCounter}</div> */}
+        <div>Pokemon {label}</div>
 
         <label htmlFor="pokemonSelect"></label>
 

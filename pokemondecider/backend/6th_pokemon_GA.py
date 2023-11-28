@@ -2,6 +2,8 @@ import random
 import numpy as np
 import pandas as pd
 
+
+print("Starting")
 #Recommends Pokemon whose types are effective against the types that may be a threat to current team.
 def find_6th_best_pokemon(user_pokemon):
     print("starting")
