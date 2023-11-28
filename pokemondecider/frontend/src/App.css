@@ -100,6 +100,11 @@ html{
   margin-bottom: 10px;
 }
 
+.sixthholder{
+  justify-content: center;
+  margin: 20px;
+  display: flex;
+}
 
 
 .statsholder{
@@ -110,6 +115,23 @@ html{
   margin-top: 2%;
   margin-bottom:2%
 }
+
+
+.bestholder{
+  padding: 1%;
+  display:flex;
+  width: 300px;
+  text-align: justify;
+  margin-top: auto;
+  margin-bottom:auto;
+}
+
+bestHolderCenterer{
+  margin-top: auto;
+  margin-bottom: auto;
+
+}
+
 
 .statsholderContainer{
   display: flex 1;
@@ -171,10 +193,7 @@ html{
 .bestPokemon{
   background-color: #e75c37;
   background-size: 1500px;
-  height: 420px;
+  height: auto;
   padding-bottom: 180px;
-  /* width: 100px; */
-  /* justify-content: center; */
-  /* margin-left: 10px; */
-  /* margin-right: 50px; */
+  
 }
