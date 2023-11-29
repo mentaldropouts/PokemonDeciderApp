@@ -4,6 +4,23 @@ import { typeData } from "./Types"
 import sendDataToBackend from './submit'
 
 function BestPokemon( ) {
+  const [teamData, setTeamData] = useState({
+
+    total: "0",
+
+    hp: "0",
+
+    attack: "0",
+
+    defense: "0",
+
+    spAtk: "0",
+
+    spDef: "0",
+
+    speed: "0",
+
+  })
 
   const [selectedPokemonData, setSelectedPokemonData] = useState({
     
@@ -89,86 +106,97 @@ function BestPokemon( ) {
     }, [selectedPokemonData.id])
 
     return (
-        <div class="dropdown">
 
-        {/* <div>Pokemon {pkmnCounter}</div> */}
+      // <div class="dropdownInline">
+      //   {/* <div class="dropdown"> */}
 
-        <label htmlFor="pokemonSelect"></label>
+      //   {/* <div>Pokemon {pkmnCounter}</div> */}
 
-        {/* Select menu for selecting any of the imported pokemon */}
-        {/* <select id="pokemonSelect" onChange={onDataChange} value={selectedPokemonData.name}>
+      //   <div class="statsholder">
 
-          <option value="">{selectedPokemonData.name}</option>
-
-          {Object.keys(statData).map((id) => (
-
-            // Putting the ID with the name so we can pull other info
-            <option key={id} value={id}>
-
-              {statData[id].Name}
-
-            </option>
-
-          ))}
-
-        </select> */}
-        <div>
-            <h1>Hello</h1>
-        </div>
+      //       <div class="col statsGrouper"> Attack <div class="stats">{}</div>
             
-        <div class="imageContainer">
+      //       <div class="col statsGrouper"> SpAtk <div class="stats">{}</div></div>
 
-            <img class="image" src={selectedPokemonData.image} alt={selectedPokemonData.name} />
-            <div class="name"> {selectedPokemonData.name}</div>
+      //       </div>
+
+
+      //       <div class="col statsGrouper"> Defense <div class="stats">{}</div>
             
-        </div>
+      //       <div class="col statsGrouper"> SpDef <div class="stats">{}</div></div>
 
-        {/* Stats for pokem */}
+      //       </div>
 
-        {selectedPokemonData && (
 
-          <div>
 
-            {/* <div>Selected Pokemon: {selectedPokemon} </div> */}
+      //       <div class="col statsGrouper"> Speed <div class="stats">{}</div>
 
-            {/* <div>ID: {selectedID}</div> */}
+      //       <div class="col statsGrouper"> Total <div class="stats">{}</div></div>
+            
+      //       </div>
 
-            <div class="statsholder">
 
-              <div class="col">
+      //   </div>
 
-              <div class="statsGrouper"> Attack <div class="stats">{selectedPokemonData.attack}</div></div>
 
-                <div class="statsGrouper"> Defense <div class="stats">{selectedPokemonData.defense}</div></div>
 
-               <div class="statsGrouper"> Total <div class="stats">{selectedPokemonData.total}</div></div>
 
-              </div>
+          <div class="sixthholder">
 
-              <div class="col">
-                
-                <div class="statsGrouper"> SpAtk <div class="stats">{selectedPokemonData.spAtk}</div> </div>
+          <div class="imageContainer">
 
-                <div class="statsGrouper"> SpDef <div class="stats">{selectedPokemonData.spDef}</div></div>
+              <img class="image" src={selectedPokemonData.image} alt={selectedPokemonData.name} />
+              <div class="name"> {selectedPokemonData.name}</div>
+            
+          </div>
 
-                <div class="statsGrouper"> Speed <div class="stats">{selectedPokemonData.speed}</div></div>
+          {selectedPokemonData && (
 
-             </div>
+<div>
 
-            </div>
+  {/* <div>Selected Pokemon: {selectedPokemon} </div> */}
 
-            <div class="typeholder">
+  {/* <div>ID: {selectedID}</div> */}
 
-              <div> {selectedPokemonData.type1} {selectedPokemonData.type2}</div>
+  <div class="bestholder">
 
-            </div>  
+    <div class="col">
+
+    <div class="statsGrouper"> Attack <div class="stats">{selectedPokemonData.attack}</div></div>
+
+      <div class="statsGrouper"> Defense <div class="stats">{selectedPokemonData.defense}</div></div>
+
+     <div class="statsGrouper"> Total <div class="stats">{selectedPokemonData.total}</div></div>
+
+    </div>
+
+    <div class="col">
+      
+      <div class="statsGrouper"> SpAtk <div class="stats">{selectedPokemonData.spAtk}</div> </div>
+
+      <div class="statsGrouper"> SpDef <div class="stats">{selectedPokemonData.spDef}</div></div>
+
+      <div class="statsGrouper"> Speed <div class="stats">{selectedPokemonData.speed}</div></div>
+
+   </div>
+
+  </div>
+
+  <div class="typeholder">
+
+    <div> {selectedPokemonData.type1} {selectedPokemonData.type2}</div>
+
+  </div>  
+
+</div>
+
+)}
+
+
 
           </div>
-          
-        )}
-
-        
-      </div>
+      // {/* </div> */}
+    // </div>
 
     );
 

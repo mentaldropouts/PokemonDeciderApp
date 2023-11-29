@@ -29,7 +29,13 @@ def receive_data_from_frontend():
     else:
         try:
             data_from_frontend = request.get_json()
-            print("DATA FROM BACKEND:\n", data_from_frontend)
+            for i in data_from_frontend.keys():
+                print(i, ":", data_from_frontend[i])
+
+
+
+
+
             # Process the data as needed
             response = jsonify({'message': 'Data received and processed successfully'})
         except Exception as e:

@@ -26,14 +26,17 @@ function App() {
             <PokemonDropdown label="1"/> <PokemonDropdown label="2"/> <PokemonDropdown label="3"/> <PokemonDropdown label="4"/> <PokemonDropdown label="5"/>
 
           </div>
-          <div class="bestPokemon">
-            <BestPokemon/>
-          </div>
 
+          
+          <div class="bestPokemon">
           <div class="buttonRow">
           {/* // Gives us access to the random team data */}
           <Handler onTeamDataLoaded={handleTeamDataLoaded}/>
           </div>
+            <BestPokemon/>
+          </div>
+
+         
 
     </div>
   );
