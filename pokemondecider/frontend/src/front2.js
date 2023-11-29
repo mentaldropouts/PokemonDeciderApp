@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
-import sendDataToBackend from './submit'
 
 function BestPokemon( ) {
   const [teamData, setTeamData] = useState({
@@ -89,7 +88,6 @@ function BestPokemon( ) {
       // Shartending the name of the pokemon to be displayed
       const onDataChange = (event) => {
         handleSlottingData(event);
-        sendDataToBackend(selectedPokemonData);
       };
 
     // Defines the teammate number above the dropdown column

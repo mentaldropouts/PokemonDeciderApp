@@ -8,6 +8,7 @@ import BestPokemon from './front2';
 function App() {
 
   const [RandTeam,SetRandTeam] = useState();
+
   // Define a function to receive the data from Handler
   const handleTeamDataLoaded = (data) => {
   SetRandTeam(data);

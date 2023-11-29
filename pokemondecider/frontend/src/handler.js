@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 import axios from "axios"
+import handleButtonClick from './sendButton'
+
 
 function Handler(props) {
  const randKeys = [];
  const [TeamData,SetTeamData] = useState();
 
  useEffect(() => {
-  getData();
+  getRandomData();
  }, []);
 
- function getData() {
+ function getRandomData() {
    axios({
      method: "GET",
      url:"/test",
@@ -44,10 +46,10 @@ function Handler(props) {
     <div >
     
       {/* Random Button  */}
-      <button class="Button" onClick={getData}>Randomize</button>
+      <button class="Button" onClick={getRandomData}>Randomize</button>
       
       {/* Submit Button  ( DOESNT HAVE A BINDING YET ) */} 
-      <button class="Button" onClick={getData}>Submit</button>
+      <button class="Button" onClick={handleButtonClick}> Submit</button>
       {/* <button class="Button" onClick={submitTeam}>Submit</button> */}
 
 

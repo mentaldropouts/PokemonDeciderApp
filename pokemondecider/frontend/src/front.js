@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
-import sendDataToBackend from './submit'
+import sendDataToBackend from './sendData'
 
 function PokemonDropdown( {label} ) {
 

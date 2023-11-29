@@ -21,7 +21,31 @@ def randomTeam():
 
 pokemonTeam = {}
 
-@api.route('/submit', methods=['POST', 'OPTIONS'])
+
+@api.route('/buttonPressed', methods=['POST'])
+def button_pressed():
+    try:
+        # Assuming the request contains JSON data with a key 'buttonPressed'
+        button_pressed = request.json.get('buttonPressed')
+
+        # Perform some action based on the button_pressed value
+        if button_pressed:
+            # Perform an action when the button is pressed
+            result = {'message': 'Button pressed on the frontend!'}
+
+
+            print(pokemonTeam)
+
+
+        else:
+            result = {'message': 'Button not pressed.'}
+        return jsonify(result)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+
+@api.route('/PokeData', methods=['POST', 'OPTIONS'])
 def receive_data_from_frontend():
     if request.method == 'OPTIONS':
         # Handle preflight request
@@ -29,14 +53,19 @@ def receive_data_from_frontend():
     else:
         try:
             data_from_frontend = request.get_json()
-            for i in data_from_frontend.keys():
-                print(i, ":", data_from_frontend[i])
+            
+            print(data_from_frontend["name"], ":", data_from_frontend["label"]["label"])   
 
+            currentName = data_from_frontend["name"]
 
+            currentLabel = data_from_frontend["label"]["label"]
 
-
-
+            pokemonTeam[currentLabel] = currentName
             # Process the data as needed
+
+            print(pokemonTeam)
+            print()
+
             response = jsonify({'message': 'Data received and processed successfully'})
         except Exception as e:
             print(f"An error occurred: {str(e)}")
@@ -46,5 +75,6 @@ def receive_data_from_frontend():
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
     response.headers.add('Access-Control-Allow-Methods', 'POST')
+
 
     return response

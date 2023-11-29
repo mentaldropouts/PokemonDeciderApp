@@ -3,9 +3,12 @@ import numpy as np
 import pandas as pd
 
 
+global team_size
+team_size = 6
+
 print("Starting")
 #Recommends Pokemon whose types are effective against the types that may be a threat to current team.
-def find_6th_best_pokemon(user_pokemon):
+def find_6th_best_pokemon(user_pokemon, gen1, damage_array):
     print("starting")
     best_6th_pokemon = None
     best_6th_stats = np.zeros(6)  # Initialize with zeros
@@ -55,14 +58,14 @@ def find_6th_best_pokemon(user_pokemon):
     return best_6th_pokemon
 
 #Calculates the fitness or total stats of a given Pokemon team
-def fitness(pokemon_team):
+def fitness(pokemon_team, gen1):
     team_stats = gen1[gen1['Name'].isin(pokemon_team)].sum()
     total_stats = team_stats['HP'] + team_stats['Attack'] + team_stats['Defense'] + team_stats['Sp. Atk']  + team_stats['Sp. Def'] + team_stats['Speed']
     
     return total_stats
 
 #Creates random pokemon team
-def create_random_team():
+def create_random_team(gen1):
     team = random.sample(gen1['Name'].tolist(), team_size)
     return team
 
@@ -75,7 +78,8 @@ def crossover(parent1, parent2):
     return offspring
 
 #Mutate by randomly replacing one pokemon with another
-def mutate(pokemon_team):
+def mutate(pokemon_team, mutation_rate, gen1):
+    team_size = 6
     if random.random() < mutation_rate:
         #random index
         i = random.randint(0, team_size - 1)
@@ -83,37 +87,40 @@ def mutate(pokemon_team):
         new_pokemon = random.choice(gen1['Name'].tolist())
         pokemon_team[i] = new_pokemon
 
+
+def driver(user_pokemon):
+
 #Reading and cleaning data
-gen1 = pd.read_csv('pokemon.csv').drop('#', axis=1)
+    gen1 = pd.read_csv('PokemonStats.csv').drop('#', axis=1)
 
-mask = gen1['Name'].str.startswith('Mega')
+    mask = gen1['Name'].str.startswith('Mega')
 
-gen1 = gen1[~mask]
+    gen1 = gen1[~mask]
 
-gen1 = gen1[gen1['Generation'] == 1].reset_index() #Generation 1
+    # gen1 = gen1[gen1['Generation'] == 1].reset_index() #Generation 1
 
-gen1['Total'] = gen1['HP'] + gen1['Attack'] + gen1['Defense'] + gen1['Sp. Atk'] + gen1['Sp. Def'] + gen1['Speed']
+    gen1['Total'] = gen1['HP'] + gen1['Attack'] + gen1['Defense'] + gen1['SpAtk'] + gen1['SpDef'] + gen1['Speed']
 
-gen1['Type 2'].fillna('None', inplace=True)
+    gen1['Type 2'].fillna('None', inplace=True)
 
-gen1.drop(['index', 'Generation', 'Legendary', 'Total'], axis=1, inplace=True)
+    gen1.drop(['index', 'Generation', 'Legendary', 'Total'], axis=1, inplace=True)
 
 #Uncomment below to see data
 # print(gen1.info())
 
-#Constants
-team_size = 6
-max_generations = 750
-population_size = 20
-mutation_rate = .1
+    #Constants
+    team_size = 6
+    max_generations = 750
+    population_size = 20
+    mutation_rate = .1
 
-#Storing all 18 possible pokemon types in an array
-pokemon_types = ["Normal", "Fire", "Water", "Electric", "Grass", "Ice",
-                 "Fighting", "Poison", "Ground", "Flying", "Psychic",
-                 "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"]
+    #Storing all 18 possible pokemon types in an array
+    pokemon_types = ["Normal", "Fire", "Water", "Electric", "Grass", "Ice",
+                    "Fighting", "Poison", "Ground", "Flying", "Psychic",
+                    "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"]
 
-#18 x 18 array with Pokemon type multipler values
-damage_array = np.array([[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1/2, 0, 1, 1, 1/2, 1],
+    #18 x 18 array with Pokemon type multipler values
+    damage_array = np.array([[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1/2, 0, 1, 1, 1/2, 1],
                     [1, 1/2, 1/2, 1, 2, 2, 1, 1, 1, 1, 1, 2, 1/2, 1, 1/2, 1, 2, 1],
                     [1, 2, 1/2, 1, 1/2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1/2, 1, 1, 1],
                     [1, 1, 2, 1/2, 1/2, 1, 1, 1, 0, 2, 1, 1, 1, 1, 1/2, 1, 1, 1],
@@ -132,45 +139,45 @@ damage_array = np.array([[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1/2, 0, 1, 1, 1/2,
                     [1, 1/2, 1/2, 1/2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1/2, 2],
                     [1, 1/2, 1, 1, 1, 1, 2, 1/2, 1, 1, 1, 1, 1, 1, 2, 2, 1/2, 1]])
 
-#Asking User for 5 Pokemon
-user_pokemon = []
-for i in range(5):
-    user_pokemon_name = input(f"Enter the name of Pokémon {i+1}: ")
-    user_pokemon.append(user_pokemon_name)
+    # #Asking User for 5 Pokemon
+    # user_pokemon = []
+    # for i in range(5):
+    #     user_pokemon_name = input(f"Enter the name of Pokémon {i+1}: ")
+    #     user_pokemon.append(user_pokemon_name)
 
-#Variables for 6th pokemon and its stats
-best_6th_pokemon = None
+    #Variables for 6th pokemon and its stats
+    best_6th_pokemon = None
 
-#Generating initial population of random pokemon teams
-population = [create_random_team() for _ in range(population_size)]
+    #Generating initial population of random pokemon teams
+    population = [create_random_team() for _ in range(population_size)]
 
-#Loop that runs every generation
-for generation in range(max_generations):
-    #Calculate fitness scores for teams
-    fitness_scores = [fitness(pokemon_team) for pokemon_team in population]
+    #Loop that runs every generation
+    for generation in range(max_generations):
+        #Calculate fitness scores for teams
+        fitness_scores = [fitness(pokemon_team) for pokemon_team in population]
 
-    #Select half of population as parents
-    num_parents = population_size // 2
-    parents = [population[i] for i in sorted(range(len(fitness_scores)), key=lambda x: fitness_scores[x], reverse=True)[:num_parents]]
+        #Select half of population as parents
+        num_parents = population_size // 2
+        parents = [population[i] for i in sorted(range(len(fitness_scores)), key=lambda x: fitness_scores[x], reverse=True)[:num_parents]]
     
-    #Generate new generation using crossovers and mutations
-    new_generation = []
-    while len(new_generation) < population_size:
-        parent1, parent2 = random.sample(parents, 2)
-        offspring = crossover(parent1, parent2)
-        mutate(offspring)
-        new_generation.append(offspring)
+        #Generate new generation using crossovers and mutations
+        new_generation = []
+        while len(new_generation) < population_size:
+            parent1, parent2 = random.sample(parents, 2)
+            offspring = crossover(parent1, parent2)
+            mutate(offspring)
+            new_generation.append(offspring)
 
-    #Updating population with newly generated generation
-    population = new_generation
+        #Updating population with newly generated generation
+        population = new_generation
 
-#'Best' variables
-best_team = max(population, key=fitness)
-best_fitness = fitness(best_team)
-best_6th_pokemon = find_6th_best_pokemon(user_pokemon)
+    #'Best' variables
+    best_team = max(population, key=fitness)
+    best_fitness = fitness(best_team)
+    best_6th_pokemon = find_6th_best_pokemon(user_pokemon)
 
-#Output
-print("Best 6th Pokemon for your team:", best_6th_pokemon)
+    #Output
+    print("Best 6th Pokemon for your team:", best_6th_pokemon)
 
 # print("Best Team: ", best_team)
 # print("Total Stats of Best Team: ", best_fitness)
