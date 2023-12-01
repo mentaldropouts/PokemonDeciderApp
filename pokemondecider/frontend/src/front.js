@@ -67,8 +67,7 @@ function PokemonDropdown( {label} ) {
     image: `pkmnSprites/pkmn${ID}.png`,
 
     label: {label}
-
-
+    
     })
   };
 

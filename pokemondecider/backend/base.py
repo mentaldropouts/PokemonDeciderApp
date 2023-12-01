@@ -44,12 +44,13 @@ def button_pressed():
             print("Best Pokemon: ", Model.bestPokemon)
             print("Best Team: ", Model.bestTeam)
 
-            return jsonify(result=Model.bestPokemon)
+            
+            return jsonify(result=Model.bestTeam)
+            
             
         else:
             result = {'message': 'Button not pressed.'}
             print(result)
-        return jsonify(result)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500

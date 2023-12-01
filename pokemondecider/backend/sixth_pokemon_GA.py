@@ -8,7 +8,7 @@ test = ["Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon"]
 
 class GenAlg:
 
-    def __init__(self,fileName, maxGenerations = 750, populationSize = 20, mutationRate = 0.1):
+    def __init__(self,fileName, maxGenerations = 500, populationSize = 20, mutationRate = 0.1):
 
         self.file = fileName
         self.teamSize = 6
@@ -29,6 +29,7 @@ class GenAlg:
 
         best_6th_pokemon = None
         best_6th_stats = np.zeros(6)  # Initialize with zeros
+        
 
         #Iterating thorugh each pokemon in gen
         for pokemon_name in self.gen['Name']:
@@ -39,13 +40,13 @@ class GenAlg:
             if cleaned_pokemon_name not in self.user_pokemon:
                 # Calculate the total stats for the 6th Pokémon
                 total_stats = self.gen.loc[self.gen['Name'] == pokemon_name, 'HP':'Speed'].values.sum()
-                # print("TotalStats: ", total_stats)
+                print("TotalStats: ", total_stats)
 
                 # Calculate type effectiveness based on user's chosen Pokémon
                 type_effectiveness = np.zeros(18)  #18 = num of types
 
                 for user_choice in self.user_pokemon:
-                    # print("In 2nd for-loop")
+                    print("In 2nd for-loop")
                     cleaned_user_choice = user_choice.strip()
                     #Check if input pokemon is in dataset
                     if cleaned_user_choice not in self.gen['Name'].values:
@@ -59,14 +60,14 @@ class GenAlg:
                     user_choice_types = [t for t in user_choice_types.flatten() if t != 'None']  # Convert to list
                     #get types of 6th pokemon
                     pokemon_types = set(self.gen.loc[self.gen['Name'] == pokemon_name, 'Type 1':'Type 2'].values.flatten())
-                    # print("Still Caluculating... ")
+                    print("Still Caluculating...")
                     #Calculating type effectiveness using the damage_array
                     for t in user_choice_types:
-                        # print("In 3rd for loop")
+                        print("In 3rd for loop")
                         if t in pokemon_types:
                             type_index = list(pokemon_types).index(t)
                             type_effectiveness += self.damageArray[type_index]
-
+                    print("Exiting 3rd For Loop")
                     # Calculate reverse type effectiveness score to find complementing types
                     reverse_type_effectiveness = np.ones(18) - type_effectiveness
                 
@@ -89,7 +90,7 @@ class GenAlg:
         total_stats = team_stats['HP'] + team_stats['Attack'] + team_stats['Defense'] + team_stats['SpAtk']  + team_stats['SpDef'] + team_stats['Speed']
         typeCoverage = sum(1 for value in self.teamTypes.values() if value > 0)
 
-        return typeCoverage
+        return typeCoverage * total_stats
 
 
     #Creates random pokemon team
@@ -135,7 +136,6 @@ class GenAlg:
         teamTypes = {type_: 0 for type_ in self.types}
 
         print("Pokemon: ", self.user_pokemon)
-        print("teamTypes:", teamTypes)
         for i in self.user_pokemon:
             currentRow = self.gen.loc[self.gen['Name'] == i]
             teamTypes[currentRow['Type 1'].values[0]] += 1
@@ -144,7 +144,7 @@ class GenAlg:
                 teamTypes[currentRow['Type 2'].values[0]] += 1
 
         self.teamTypes = teamTypes
-
+        print("Types: ", self.teamTypes)
         print("exiting Count Types")
 
 

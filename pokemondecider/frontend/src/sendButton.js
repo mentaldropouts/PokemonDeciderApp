@@ -14,12 +14,15 @@ const handleButtonClick = async () => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        else{
 
         // Parse the JSON in the response
         const data = await response.json();
 
         // Update the state or handle the response as needed
-        console.log("Result: ",data.message);
+        console.log("Result: ",data);
+
+        }
 
     } catch (error) {
         console.error('Fetch error:', error);
