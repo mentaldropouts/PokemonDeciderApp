@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from zAlgs import createTeamDriver
 from flask_cors import CORS
+from sixth_pokemon_GA import GenAlg
 
 # This is the basic set up for what we will be using to handle the pokemon data.
 # We will handle the data by calling Zach's Algorithms and then send the dict of 
@@ -33,8 +34,9 @@ def button_pressed():
             # Perform an action when the button is pressed
             result = {'message': 'Button pressed on the frontend!'}
 
-
-            print(pokemonTeam)
+            Model = GenAlg("PokemStats.csv")
+            
+            
 
 
         else:
@@ -55,7 +57,7 @@ def receive_data_from_frontend():
             data_from_frontend = request.get_json()
             
             print(data_from_frontend["name"], ":", data_from_frontend["label"]["label"])   
-
+        
             currentName = data_from_frontend["name"]
 
             currentLabel = data_from_frontend["label"]["label"]
