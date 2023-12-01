@@ -74,6 +74,7 @@ class GenAlg:
     #Calculates the fitness or total stats of a given Pokemon team
     def fitness(self,pokemon_team):
 
+        print("POKEMON TEAM: ", pokemon_team)
         team_stats = self.gen[self.gen['Name'].isin(pokemon_team)].sum()
         total_stats = team_stats['HP'] + team_stats['Attack'] + team_stats['Defense'] + team_stats['SpAtk']  + team_stats['SpDef'] + team_stats['Speed']
         typeCoverage = sum(1 for value in self.teamTypes.values() if value > 0)
@@ -183,6 +184,7 @@ class GenAlg:
 
         #Generating initial population of random pokemon teams
         population = self.user_pokemon
+        print("USER POKEMON:", self.user_pokemon)
 
         #Loop that runs every generation
         for generation in range(self.maxGen):
@@ -215,6 +217,7 @@ class GenAlg:
 
 
 
-        def Driver(self):
-            self.genDriver()
-            self.run()
+
+Model = GenAlg(fileName="pokemondecider/backend/PokemonStats.csv")
+Model.genDriver()
+Model.run()
