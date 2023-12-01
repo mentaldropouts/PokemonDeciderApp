@@ -19,7 +19,7 @@ const handleButtonClick = async () => {
         const data = await response.json();
 
         // Update the state or handle the response as needed
-        console.log(data.message);
+        console.log("Result: ",data.message);
 
     } catch (error) {
         console.error('Fetch error:', error);

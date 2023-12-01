@@ -29,7 +29,7 @@ function Handler(props) {
       props.onTeamDataLoaded(data);
     }
   
-    // console.log(TeamData);
+    console.log(TeamData);
   
   // Error handling
   }).catch((error) => {

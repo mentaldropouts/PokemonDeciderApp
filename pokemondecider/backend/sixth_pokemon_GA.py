@@ -24,6 +24,7 @@ class GenAlg:
 
     #Recommends Pokemon whose types are effective against the types that may be a threat to current team.
     def find_6th_best_pokemon(self):
+
         print("Starting 6th Best Function")
 
         best_6th_pokemon = None
@@ -31,18 +32,17 @@ class GenAlg:
 
         #Iterating thorugh each pokemon in gen
         for pokemon_name in self.gen['Name']:
-            print("In 6th Best Loop")
+
             #Clean the pokemon name by removing leading and trailing spaces
             cleaned_pokemon_name = pokemon_name.strip()
             #If pokemon is not already chosen by the user
             if cleaned_pokemon_name not in self.user_pokemon:
                 # Calculate the total stats for the 6th Pokémon
                 total_stats = self.gen.loc[self.gen['Name'] == pokemon_name, 'HP':'Speed'].values.sum()
-                print("TotalStats: ", total_stats)
+                # print("TotalStats: ", total_stats)
 
                 # Calculate type effectiveness based on user's chosen Pokémon
                 type_effectiveness = np.zeros(18)  #18 = num of types
-                print(self.user_pokemon)
 
                 for user_choice in self.user_pokemon:
                     # print("In 2nd for-loop")
@@ -62,7 +62,7 @@ class GenAlg:
                     # print("Still Caluculating... ")
                     #Calculating type effectiveness using the damage_array
                     for t in user_choice_types:
-                        print("In 3rd for loop")
+                        # print("In 3rd for loop")
                         if t in pokemon_types:
                             type_index = list(pokemon_types).index(t)
                             type_effectiveness += self.damageArray[type_index]
@@ -93,9 +93,19 @@ class GenAlg:
 
 
     #Creates random pokemon team
-    def create_random_team(self, gen):
-        team = random.sample(gen['Name'].tolist(), self.teamSize)
-        return team
+    def create_random_slots(self, gen):
+
+        print("Creating Random Team!")
+
+        numRandomSlots =  6 - len(self.user_pokemon)
+
+        randMon = random.sample(gen['Name'].tolist(), numRandomSlots)
+
+        randMon = self.user_pokemon + randMon
+
+        print(randMon)
+
+        return randMon
 
     #Creates offsprint from two parent pokemon teams
     def crossover(self,parent1, parent2):
@@ -110,15 +120,22 @@ class GenAlg:
         
         if random.random() < mutation_rate:
             #random index
-            i = random.randint(0, self.teamSize - 1)
+            i = 0
+            while pokemon_team[i] in self.user_pokemon:
+                i = random.randint(0, self.teamSize - 1)
             #Replace Pokemon at index with a randomly chosen pokemon
             new_pokemon = random.choice(gen['Name'].tolist())
             pokemon_team[i] = new_pokemon
+            
 
     def countTypes(self):
+
         print("Starting Count Types")
+
         teamTypes = {type_: 0 for type_ in self.types}
-        print("\t teamTypes:", teamTypes)
+
+        print("Pokemon: ", self.user_pokemon)
+        print("teamTypes:", teamTypes)
         for i in self.user_pokemon:
             currentRow = self.gen.loc[self.gen['Name'] == i]
             teamTypes[currentRow['Type 1'].values[0]] += 1
@@ -158,50 +175,23 @@ class GenAlg:
                         "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"]
         
 
-         #Reading and cleaning data
+        # Reading and cleaning data
         print("Reading File", self.file)
         try:
             
             self.gen = pd.read_csv(self.file).drop('ID', axis=1)
-            print("Read!", self.gen)
-
-
 
         except Exception as e:
             print(f"Error reading this file:{e}")
+        
+        self.gen = self.gen[~self.gen['Name'].str.contains("Mega", case=False)]    
 
-
-
-        mask = self.gen['Name'].str.startswith('Mega')
-
-        self.gen = self.gen[~mask]
-
-        # gen = gen[gen['Generation'] == 1].reset_index() #Generation 1
-
-        # self.gen['Total'] = self.gen['HP'] + self.gen['Attack'] + self.gen['Defense'] + self.gen['SpAtk'] + self.gen['SpDef'] + self.gen['Speed']
-
-        print("Filling Type 2 with None")
         self.gen['Type 2'].fillna('None', inplace=True)
 
         # Removing Lengendary and Mega
-        print("Removing OP Mons")
         filtered_OP = self.gen[self.gen['Total'] > 600]
         self.gen = self.gen.drop(filtered_OP.index)
         assert len(self.gen) > 200
-
-
-        # self.gen.drop(['Total'], axis=1, inplace=True)
-
-        #Constants
-        # team_size = 6
-        # max_generations = 750
-        # population_size = 20
-        # mutation_rate = .1
-        # #Asking User for 5 Pokemon
-        # user_pokemon = []
-        #         # for i in range(5):
-        #     user_pokemon_name = input(f"Enter the name of Pokémon {i+1}: ")
-        #     user_pokemon.append(user_pokemon_name)
 
     def run(self):
         
@@ -211,10 +201,14 @@ class GenAlg:
         
         self.countTypes()
 
+        print(self.user_pokemon, "\n")
+    
         #Generating initial population of random pokemon teams
         print("Populating")
-        population = [self.create_random_team(self.gen) for _ in range(self.popSize)]
-        print("Initial Population:", population)
+        print(self.create_random_slots(self.gen))
+
+        # Making as many random teams as popSize
+        population = [self.create_random_slots(self.gen) for _ in range(self.popSize)]
 
         # Loop that runs every generation
         for generation in range(self.maxGen):
@@ -224,10 +218,7 @@ class GenAlg:
             # Select half of the population as parents
             num_parents = self.popSize // 2
             parents = [population[i] for i in sorted(range(len(fitness_scores)), key=lambda x: fitness_scores[x], reverse=True)[:num_parents]]      
-
             #Select half of population as parents
-        
-            #Generate new generation using crossovers and mutations
             new_generation = []
             while len(new_generation) < self.popSize:
                 parent1, parent2 = random.sample(parents, 2)
@@ -242,10 +233,6 @@ class GenAlg:
         best_team = max(population, key=self.fitness)
         best_fitness = self.fitness(best_team)
         best_6th_pokemon = self.find_6th_best_pokemon()
-
-        #Output
-        # print("Best 6th Pokemon for your team:", best_6th_pokemon)
-        # print("Best Team: ", best_team)
 
         self.bestTeam = best_team
         self.bestPokemon = best_6th_pokemon

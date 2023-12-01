@@ -42,9 +42,10 @@ def button_pressed():
             Model.run()
 
             print("Best Pokemon: ", Model.bestPokemon)
+            print("Best Team: ", Model.bestTeam)
+
+            return jsonify(result=Model.bestPokemon)
             
-
-
         else:
             result = {'message': 'Button not pressed.'}
             print(result)
