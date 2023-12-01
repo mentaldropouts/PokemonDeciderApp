@@ -27,20 +27,27 @@ pokemonTeam = {}
 def button_pressed():
     try:
         # Assuming the request contains JSON data with a key 'buttonPressed'
+        print("Getting Button")
         button_pressed = request.json.get('buttonPressed')
 
         # Perform some action based on the button_pressed value
         if button_pressed:
             # Perform an action when the button is pressed
             result = {'message': 'Button pressed on the frontend!'}
+            print(result)
+            # print(pokemonTeam)
+            Model = GenAlg("PokemonStats.csv")
+            Model.user_pokemon = list(pokemonTeam.values())
+            Model.genDriver()
+            Model.run()
 
-            Model = GenAlg("PokemStats.csv")
-            
+            print("Best Pokemon: ", Model.bestPokemon)
             
 
 
         else:
             result = {'message': 'Button not pressed.'}
+            print(result)
         return jsonify(result)
 
     except Exception as e:

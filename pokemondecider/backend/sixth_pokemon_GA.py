@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import pandas as pd
+import os
 
 
 test = ["Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon"]
@@ -15,13 +16,14 @@ class GenAlg:
         self.popSize = populationSize
         self.mutRate = mutationRate
         self.user_pokemon = test
+        self.gen = None
 
         
         
 
 
     #Recommends Pokemon whose types are effective against the types that may be a threat to current team.
-    def find_6th_best_pokemon(self, user_pokemon):
+    def find_6th_best_pokemon(self):
         print("Starting 6th Best Function")
 
         best_6th_pokemon = None
@@ -29,38 +31,45 @@ class GenAlg:
 
         #Iterating thorugh each pokemon in gen
         for pokemon_name in self.gen['Name']:
+            print("In 6th Best Loop")
             #Clean the pokemon name by removing leading and trailing spaces
             cleaned_pokemon_name = pokemon_name.strip()
             #If pokemon is not already chosen by the user
             if cleaned_pokemon_name not in self.user_pokemon:
                 # Calculate the total stats for the 6th Pokémon
                 total_stats = self.gen.loc[self.gen['Name'] == pokemon_name, 'HP':'Speed'].values.sum()
+                print("TotalStats: ", total_stats)
 
                 # Calculate type effectiveness based on user's chosen Pokémon
                 type_effectiveness = np.zeros(18)  #18 = num of types
-                for user_choice in user_pokemon:
+                print(self.user_pokemon)
+
+                for user_choice in self.user_pokemon:
+                    # print("In 2nd for-loop")
                     cleaned_user_choice = user_choice.strip()
                     #Check if input pokemon is in dataset
                     if cleaned_user_choice not in self.gen['Name'].values:
                         print(f"User's Pokémon '{user_choice}' not found in the dataset.")
                         continue
-
+                    
+                    print("Calculating...")
                     #Types of user's chosen pokemon
                     user_choice_types = self.gen.loc[self.gen['Name'] == cleaned_user_choice, 'Type 1':'Type 2'].values
                     #ignoring 'None' (if pokemon has no second type)
                     user_choice_types = [t for t in user_choice_types.flatten() if t != 'None']  # Convert to list
                     #get types of 6th pokemon
                     pokemon_types = set(self.gen.loc[self.gen['Name'] == pokemon_name, 'Type 1':'Type 2'].values.flatten())
-
+                    # print("Still Caluculating... ")
                     #Calculating type effectiveness using the damage_array
                     for t in user_choice_types:
+                        print("In 3rd for loop")
                         if t in pokemon_types:
                             type_index = list(pokemon_types).index(t)
                             type_effectiveness += self.damageArray[type_index]
 
                     # Calculate reverse type effectiveness score to find complementing types
                     reverse_type_effectiveness = np.ones(18) - type_effectiveness
-
+                
                 # Combine total stats and type effectiveness score
                 combined_effectiveness = total_stats * reverse_type_effectiveness
 
@@ -75,6 +84,7 @@ class GenAlg:
     def fitness(self,pokemon_team):
 
         print("POKEMON TEAM: ", pokemon_team)
+        
         team_stats = self.gen[self.gen['Name'].isin(pokemon_team)].sum()
         total_stats = team_stats['HP'] + team_stats['Attack'] + team_stats['Defense'] + team_stats['SpAtk']  + team_stats['SpDef'] + team_stats['Speed']
         typeCoverage = sum(1 for value in self.teamTypes.values() if value > 0)
@@ -106,7 +116,9 @@ class GenAlg:
             pokemon_team[i] = new_pokemon
 
     def countTypes(self):
+        print("Starting Count Types")
         teamTypes = {type_: 0 for type_ in self.types}
+        print("\t teamTypes:", teamTypes)
         for i in self.user_pokemon:
             currentRow = self.gen.loc[self.gen['Name'] == i]
             teamTypes[currentRow['Type 1'].values[0]] += 1
@@ -116,8 +128,12 @@ class GenAlg:
 
         self.teamTypes = teamTypes
 
+        print("exiting Count Types")
+
+
     def genDriver(self):
 
+        print("Starting Gen Driver")
         self.damageArray = np.array([[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1/2, 0, 1, 1, 1/2, 1],
                         [1, 1/2, 1/2, 1, 2, 2, 1, 1, 1, 1, 1, 2, 1/2, 1, 1/2, 1, 2, 1],
                         [1, 2, 1/2, 1, 1/2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1/2, 1, 1, 1],
@@ -143,7 +159,18 @@ class GenAlg:
         
 
          #Reading and cleaning data
-        self.gen = pd.read_csv(self.file).drop('ID', axis=1)
+        print("Reading File", self.file)
+        try:
+            
+            self.gen = pd.read_csv(self.file).drop('ID', axis=1)
+            print("Read!", self.gen)
+
+
+
+        except Exception as e:
+            print(f"Error reading this file:{e}")
+
+
 
         mask = self.gen['Name'].str.startswith('Mega')
 
@@ -153,9 +180,11 @@ class GenAlg:
 
         # self.gen['Total'] = self.gen['HP'] + self.gen['Attack'] + self.gen['Defense'] + self.gen['SpAtk'] + self.gen['SpDef'] + self.gen['Speed']
 
+        print("Filling Type 2 with None")
         self.gen['Type 2'].fillna('None', inplace=True)
 
         # Removing Lengendary and Mega
+        print("Removing OP Mons")
         filtered_OP = self.gen[self.gen['Total'] > 600]
         self.gen = self.gen.drop(filtered_OP.index)
         assert len(self.gen) > 200
@@ -183,17 +212,20 @@ class GenAlg:
         self.countTypes()
 
         #Generating initial population of random pokemon teams
-        population = self.user_pokemon
-        print("USER POKEMON:", self.user_pokemon)
+        print("Populating")
+        population = [self.create_random_team(self.gen) for _ in range(self.popSize)]
+        print("Initial Population:", population)
 
-        #Loop that runs every generation
+        # Loop that runs every generation
         for generation in range(self.maxGen):
-        #Calculate fitness scores for teams
-            fitness_scores = [self.fitness(self.user_pokemon) for self.user_pokemon in population]
+            # Calculate fitness scores for teams
+            fitness_scores = [self.fitness(team) for team in population]
+
+            # Select half of the population as parents
+            num_parents = self.popSize // 2
+            parents = [population[i] for i in sorted(range(len(fitness_scores)), key=lambda x: fitness_scores[x], reverse=True)[:num_parents]]      
 
             #Select half of population as parents
-            num_parents = self.popSize // 2
-            parents = [population[i] for i in sorted(range(len(fitness_scores)), key=lambda x: fitness_scores[x], reverse=True)[:num_parents]]
         
             #Generate new generation using crossovers and mutations
             new_generation = []
@@ -209,15 +241,18 @@ class GenAlg:
         #'Best' variables
         best_team = max(population, key=self.fitness)
         best_fitness = self.fitness(best_team)
-        best_6th_pokemon = self.find_6th_best_pokemon(self.user_pokemon)
+        best_6th_pokemon = self.find_6th_best_pokemon()
 
         #Output
-        print("Best 6th Pokemon for your team:", best_6th_pokemon)
-        print("Best Team: ", best_team)
+        # print("Best 6th Pokemon for your team:", best_6th_pokemon)
+        # print("Best Team: ", best_team)
+
+        self.bestTeam = best_team
+        self.bestPokemon = best_6th_pokemon
 
 
 
 
-Model = GenAlg(fileName="pokemondecider/backend/PokemonStats.csv")
-Model.genDriver()
-Model.run()
+# Model = GenAlg(fileName="pokemondecider/backend/PokemonStats.csv")
+# Model.genDriver()
+# Model.run()
