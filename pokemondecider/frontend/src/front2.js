@@ -24,7 +24,21 @@ function BestPokemon({label, Data} ) {
   };
 
 
-  const pokemonData = findPokemonByName(Data)
+
+const myDiv = document.getElementById('Name');
+
+// Use the promise and update the div when it's resolved
+Data.then((resolvedValue) => {
+  const value = Data // Assuming resolvedValue has the structure you described
+  console.log(value);
+
+  // Set text content of the div when the promise is fulfilled
+  myDiv.textContent = value;
+}).catch((error) => {
+  console.error(error); // Handle errors here if the promise is rejected
+}); 
+
+  // const pokemonData = findPokemonByName(Data)
   
   // console.log("Pokemon Data: ", {pokemonData})
 

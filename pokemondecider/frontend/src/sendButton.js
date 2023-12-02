@@ -19,9 +19,9 @@ const handleButtonClick = async () => {
         // Parse the JSON in the response
         const data = await response.json();
 
-        // Update the state or handle the response as needed
-        console.log("Result: ",data);
-        return data
+            // Update the state or handle the response as needed
+            console.log("Result: ",data);
+            return data.result[0]
         }
 
     } catch (error) {

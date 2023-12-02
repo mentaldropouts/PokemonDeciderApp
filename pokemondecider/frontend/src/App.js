@@ -20,6 +20,8 @@ function App() {
 
   const handleTeamDataLoaded = () => {
     const res = handleButtonClick
+
+    
     setBestPokemonData(res)
     console.log("Best:" ,bestPokemonData);
   }
