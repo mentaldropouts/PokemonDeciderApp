@@ -3,19 +3,28 @@ import  PokemonDropdown  from "./front"
 import Handler from "./handler"
 import { useState } from'react';
 import BestPokemon from './front2';
+import handleButtonClick from './sendButton';
 
 
 function App() {
 
   const [RandTeam,SetRandTeam] = useState();
+  const [bestPokemonData, setBestPokemonData] = useState("");
+  // const arrayOfPokemonData = Object.entries(bestPokemonData)
 
   // Define a function to receive the data from Handler
-  const handleTeamDataLoaded = (data) => {
+  const handleTeamDataRandom = (data) => {
   SetRandTeam(data);
   console.log(RandTeam);
   };
 
-  
+  const handleTeamDataLoaded = () => {
+    const res = handleButtonClick
+    setBestPokemonData(res)
+    console.log("Best:" ,bestPokemonData);
+  }
+
+
   return (
 
     <div className="App">
@@ -30,11 +39,19 @@ function App() {
 
           
           <div class="bestPokemon">
-          <div class="buttonRow">
-          {/* // Gives us access to the random team data */}
-          <Handler onTeamDataLoaded={handleTeamDataLoaded}/>
+            <div class="buttonRow">
+
+            {/* // Gives us access to the random team data */}
+            {/* <Handler onTeamDataLoaded={handleTeamDataRandom}/> */}
+
+            <button class="Button" onClick={handleTeamDataLoaded}> Submit</button>
+
+
           </div>
-            <BestPokemon/>
+
+            <BestPokemon label="6" Data={bestPokemonData}/>
+            
+
           </div>
 
          

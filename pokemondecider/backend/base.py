@@ -38,14 +38,18 @@ def button_pressed():
             # print(pokemonTeam)
             Model = GenAlg("PokemonStats.csv")
             Model.user_pokemon = list(pokemonTeam.values())
+
+
             Model.genDriver()
             Model.run()
 
             print("Best Pokemon: ", Model.bestPokemon)
             print("Best Team: ", Model.bestTeam)
-
+            print(Model.user_pokemon)
             
-            return jsonify(result=Model.bestTeam)
+            res = [i for i in Model.bestTeam if i not in Model.user_pokemon]
+            
+            return jsonify(result=res)
             
             
         else:

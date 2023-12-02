@@ -2,7 +2,32 @@ import { useState, useEffect } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
 
-function BestPokemon( ) {
+function BestPokemon({label, Data} ) {
+
+  console.log("Inside Best: ", Data)
+
+  const findPokemonByName = (name) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const entry = Object.entries(statData).find(([key, pokemon]) => pokemon.Name === name);
+        console.log("Entry: ", entry);
+        
+        if (entry) {
+          resolve({ key: entry[0], data: entry[1] });
+        } else {
+          resolve(null);
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+
+  const pokemonData = findPokemonByName(Data)
+  
+  // console.log("Pokemon Data: ", {pokemonData})
+
   const [teamData, setTeamData] = useState({
 
     total: "0",
@@ -105,44 +130,11 @@ function BestPokemon( ) {
 
     return (
 
-      // <div class="dropdownInline">
-      //   {/* <div class="dropdown"> */}
 
-      //   {/* <div>Pokemon {pkmnCounter}</div> */}
-
-      //   <div class="statsholder">
-
-      //       <div class="col statsGrouper"> Attack <div class="stats">{}</div>
-            
-      //       <div class="col statsGrouper"> SpAtk <div class="stats">{}</div></div>
-
-      //       </div>
-
-
-      //       <div class="col statsGrouper"> Defense <div class="stats">{}</div>
-            
-      //       <div class="col statsGrouper"> SpDef <div class="stats">{}</div></div>
-
-      //       </div>
-
-
-
-      //       <div class="col statsGrouper"> Speed <div class="stats">{}</div>
-
-      //       <div class="col statsGrouper"> Total <div class="stats">{}</div></div>
-            
-      //       </div>
-
-
-      //   </div>
-
-
-
-
+          
           <div class="sixthholder">
 
           <div class="imageContainer">
-
               <img class="image" src={selectedPokemonData.image} alt={selectedPokemonData.name} />
               <div class="name"> {selectedPokemonData.name}</div>
             

@@ -21,12 +21,14 @@ const handleButtonClick = async () => {
 
         // Update the state or handle the response as needed
         console.log("Result: ",data);
-
+        return data
         }
 
     } catch (error) {
         console.error('Fetch error:', error);
     }
 };
+
+
 
 export default handleButtonClick;

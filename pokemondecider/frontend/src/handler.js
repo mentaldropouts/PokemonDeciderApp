@@ -49,7 +49,9 @@ function Handler(props) {
       <button class="Button" onClick={getRandomData}>Randomize</button>
       
       {/* Submit Button  ( DOESNT HAVE A BINDING YET ) */} 
-      <button class="Button" onClick={handleButtonClick}> Submit</button>
+      
+      {/* <button class="Button" onClick={handleButtonClick}> Submit</button> */}
+
       {/* <button class="Button" onClick={submitTeam}>Submit</button> */}
 
 
