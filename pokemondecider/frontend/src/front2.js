@@ -2,41 +2,20 @@ import { useState, useEffect } from 'react'
 import { statData } from "./Stats"
 import { typeData } from "./Types"
 
+
+
+
 function BestPokemon({label, Data} ) {
 
-  console.log("Inside Best: ", Data)
 
-  const findPokemonByName = (name) => {
-    return new Promise((resolve, reject) => {
-      try {
-        const entry = Object.entries(statData).find(([key, pokemon]) => pokemon.Name === name);
-        console.log("Entry: ", entry);
-        
-        if (entry) {
-          resolve({ key: entry[0], data: entry[1] });
-        } else {
-          resolve(null);
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
-  };
+console.log("Inside Best: ", Data)
+ 
 
-
-
-const myDiv = document.getElementById('Name');
-
-// Use the promise and update the div when it's resolved
-Data.then((resolvedValue) => {
-  const value = Data // Assuming resolvedValue has the structure you described
-  console.log(value);
-
-  // Set text content of the div when the promise is fulfilled
-  myDiv.textContent = value;
-}).catch((error) => {
-  console.error(error); // Handle errors here if the promise is rejected
-}); 
+const res = ""
+const myDiv = document.getElementById('Name');  // Set text content of the div when the promise is fulfilled
+if (res != ""){
+  myDiv.textContent = res;
+}
 
   // const pokemonData = findPokemonByName(Data)
   
