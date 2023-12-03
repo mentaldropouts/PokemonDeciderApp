@@ -12,22 +12,20 @@ function App() {
   const [RandTeam,SetRandTeam] = useState();
   const [bestPokemonData, setBestPokemonData] = useState("");
 
-
-  
-
   // Define a function to receive the data from Handler
   const handleTeamDataRandom = (data) => {
   SetRandTeam(data);
   console.log(RandTeam);
   };
 
-  function handleTeamDataLoaded()  {
+  async function handleTeamDataLoaded()  {
 
-    const result = handleButtonClick
+    const result = await handleButtonClick();
+
     setBestPokemonData(result)
-    return result
-
     console.log("Best: ", bestPokemonData)
+    const div = document.getElementById("10")
+    div.textContent = bestPokemonData
     
   }
 
@@ -44,10 +42,8 @@ function App() {
           <div class="bestPokemon">
             <div class="buttonRow">
             <button class="Button" onClick={handleTeamDataLoaded}> Submit</button>
+            <div class="name" id="10"> </div>
             </div>
-
-          
-            
         </div>
     </div>
   );

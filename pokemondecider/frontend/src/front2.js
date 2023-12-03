@@ -7,23 +7,22 @@ import { typeData } from "./Types"
 
 function BestPokemon({label, Data} ) {
 
-
 // console.log("Inside Best: ", Data)
 // console.log(statData["0"]) 
 
 async function wait() {
   try{
+
     const result = await Data;
     const myDiv = document.getElementById("Name")
     myDiv.textContext = result
     console.log("data found: ", result)
+
   } 
   catch(err){
     console.error(err)
   }
 }
-
-
 
   const [selectedPokemonData, setSelectedPokemonData] = useState({
     
@@ -114,7 +113,7 @@ async function wait() {
           <div class="sixthholder">
           <div class="imageContainer">
               <img class="image" src={selectedPokemonData.image} alt={selectedPokemonData.name} />
-              <div class="name"> {wait}</div>
+              <div class="name"></div>
             
           </div>
 
