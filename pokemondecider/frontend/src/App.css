@@ -66,7 +66,7 @@ html{
   background-color: #e75c37;
   display: flex;
   flex-direction: row;
-  height: 420px;
+  height: 450px;
   justify-content: center;
 }
 
@@ -197,21 +197,22 @@ html{
 }
 
 .name{
-
   text-align: center;
   padding: 10px;
   background-color: #83b1da;
   height:fit-content;
+}
 
-
+.name1{
+  text-align: center;
+  padding: 10px;
+  background-color: #83b1da;
+  height:fit-content;
+  margin-top:10px;
+  margin-bottom: 10px;
 }
 
 .bestPokemon{
-  /* background-color: #e75c37; */
-  /* background-size: 1500px; */
   height: auto;
   width: 100%;
-  /* width:fit-content; */
-  /* padding-bottom: 180px; */
-  
 }

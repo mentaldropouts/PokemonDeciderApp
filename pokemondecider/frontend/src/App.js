@@ -7,10 +7,22 @@ import BestPokemon from './front2';
 import handleButtonClick from './sendButton';
 
 
+
 function App() {
 
   const [RandTeam,SetRandTeam] = useState();
   const [bestPokemonData, setBestPokemonData] = useState("");
+
+  useEffect(() => {
+    // This code will run after bestPokemonData has been updated
+    console.log("Best: ", bestPokemonData);
+    const div = document.getElementById("10");
+    const button = document.getElementById('9');
+    button.style.backgroundColor = '#e75c37';
+    div.textContent = bestPokemonData;
+}, [bestPokemonData]);
+
+
 
   // Define a function to receive the data from Handler
   const handleTeamDataRandom = (data) => {
@@ -18,17 +30,19 @@ function App() {
   console.log(RandTeam);
   };
 
-  async function handleTeamDataLoaded()  {
 
-    const result = await handleButtonClick();
 
-    setBestPokemonData(result)
-    console.log("Best: ", bestPokemonData)
-    const div = document.getElementById("10")
-    div.textContent = bestPokemonData
-    
-  }
+  async function handleTeamDataLoaded() {
+    try {
+        const button = document.getElementById('9');
+        button.style.backgroundColor = 'green';
+        const result = await handleButtonClick();
+        setBestPokemonData(result);
 
+    } catch (error) {
+        console.error('Error in handleTeamDataLoaded:', error);
+    }
+}
   
   return (
 
@@ -41,8 +55,8 @@ function App() {
 
           <div class="bestPokemon">
             <div class="buttonRow">
-            <button class="Button" onClick={handleTeamDataLoaded}> Submit</button>
-            <div class="name" id="10"> </div>
+            <button class="Button" id ="9" onClick={handleTeamDataLoaded}> Submit</button>
+            <div class="name1" id="10"> </div>
             </div>
         </div>
     </div>
