@@ -1189,7 +1189,7 @@ ID,Name,Total,HP,Attack,Defense,SpAtk,SpDef,Speed,Type 1,Type 2,Height,Weight
 1004,Chi-Yu,570,55,80,80,135,120,100,Dark,Fire,0.4,4.9
 1005,Roaring Moon,590,105,139,71,55,101,119,Dragon,Dark,2,380
 1006,Iron Valiant,590,74,130,90,120,60,116,Fairy,Fighting,1.4,35
-1007,Koraidon,670,100,135,115,85,100,135,Fighting,Dragon,2.5,303
+1007,Koraidon,670,100,135,115,85,100,135,Fighting,Dragon,2.5,303~
 1008,Miraidon,670,100,85,100,135,115,135,Electric,Dragon,3.5,240
 1009,Walking Wake,590,99,83,91,125,83,109,Water,Dragon,3.5,280
 1010,Iron Leaves,590,90,130,88,70,108,104,Grass,Psychic,1.5,125

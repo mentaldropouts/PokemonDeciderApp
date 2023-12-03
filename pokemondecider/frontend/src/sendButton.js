@@ -20,7 +20,7 @@ const handleButtonClick = async () => {
         const data = await response.json();
 
             // Update the state or handle the response as needed
-            console.log("Result: ",data);
+            console.log("Result: ",data.result[0]);
             return data.result[0]
         }
 

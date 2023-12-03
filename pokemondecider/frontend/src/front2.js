@@ -8,36 +8,22 @@ import { typeData } from "./Types"
 function BestPokemon({label, Data} ) {
 
 
-console.log("Inside Best: ", Data)
- 
+// console.log("Inside Best: ", Data)
+// console.log(statData["0"]) 
 
-const res = ""
-const myDiv = document.getElementById('Name');  // Set text content of the div when the promise is fulfilled
-if (res != ""){
-  myDiv.textContent = res;
+async function wait() {
+  try{
+    const result = await Data;
+    const myDiv = document.getElementById("Name")
+    myDiv.textContext = result
+    console.log("data found: ", result)
+  } 
+  catch(err){
+    console.error(err)
+  }
 }
 
-  // const pokemonData = findPokemonByName(Data)
-  
-  // console.log("Pokemon Data: ", {pokemonData})
 
-  const [teamData, setTeamData] = useState({
-
-    total: "0",
-
-    hp: "0",
-
-    attack: "0",
-
-    defense: "0",
-
-    spAtk: "0",
-
-    spDef: "0",
-
-    speed: "0",
-
-  })
 
   const [selectedPokemonData, setSelectedPokemonData] = useState({
     
@@ -116,7 +102,7 @@ if (res != ""){
       if (selectedPokemonData.id) {
 
         console.log(selectedPokemonData.image);
-
+        wait()
       }
 
     }, [selectedPokemonData.id])
@@ -126,10 +112,9 @@ if (res != ""){
 
           
           <div class="sixthholder">
-
           <div class="imageContainer">
               <img class="image" src={selectedPokemonData.image} alt={selectedPokemonData.name} />
-              <div class="name"> {selectedPokemonData.name}</div>
+              <div class="name"> {wait}</div>
             
           </div>
 
@@ -174,13 +159,7 @@ if (res != ""){
 </div>
 
 )}
-
-
-
           </div>
-      // {/* </div> */}
-    // </div>
-
     );
 
   }
