@@ -2,7 +2,6 @@ import axios from "axios"
 
 const sendDataToBackend = async (data) => {
     try {
-
       console.log("DATA: ", data);
       // Adding the labels to the payload
       const response = await axios.post('http://localhost:5000/PokeData', data);
@@ -13,6 +12,5 @@ const sendDataToBackend = async (data) => {
       // Handle error, if needed
     }
   };
-
 
   export default sendDataToBackend;
