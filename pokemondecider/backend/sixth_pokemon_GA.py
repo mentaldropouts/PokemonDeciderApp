@@ -46,28 +46,28 @@ class GenAlg:
                 type_effectiveness = np.zeros(18)  #18 = num of types
 
                 for user_choice in self.user_pokemon:
-                    print("In 2nd for-loop")
+                    # print("In 2nd for-loop")
                     cleaned_user_choice = user_choice.strip()
                     #Check if input pokemon is in dataset
                     if cleaned_user_choice not in self.gen['Name'].values:
                         print(f"User's Pokémon '{user_choice}' not found in the dataset.")
                         continue
                     
-                    print("Calculating...")
+                    # print("Calculating...")
                     #Types of user's chosen pokemon
                     user_choice_types = self.gen.loc[self.gen['Name'] == cleaned_user_choice, 'Type 1':'Type 2'].values
                     #ignoring 'None' (if pokemon has no second type)
                     user_choice_types = [t for t in user_choice_types.flatten() if t != 'None']  # Convert to list
                     #get types of 6th pokemon
                     pokemon_types = set(self.gen.loc[self.gen['Name'] == pokemon_name, 'Type 1':'Type 2'].values.flatten())
-                    print("Still Caluculating...")
+                    # print("Still Caluculating...")
                     #Calculating type effectiveness using the damage_array
                     for t in user_choice_types:
-                        print("In 3rd for loop")
+                        # print("In 3rd for loop")
                         if t in pokemon_types:
                             type_index = list(pokemon_types).index(t)
                             type_effectiveness += self.damageArray[type_index]
-                    print("Exiting 3rd For Loop")
+                    # print("Exiting 3rd For Loop")
                     # Calculate reverse type effectiveness score to find complementing types
                     reverse_type_effectiveness = np.ones(18) - type_effectiveness
                 
@@ -96,7 +96,7 @@ class GenAlg:
     #Creates random pokemon team
     def create_random_slots(self, gen):
 
-        print("Creating Random Team!")
+        # print("Creating Random Team!")
 
         numRandomSlots =  6 - len(self.user_pokemon)
 
@@ -104,13 +104,13 @@ class GenAlg:
 
         randMon = self.user_pokemon + randMon
 
-        print(randMon)
+        # print(randMon)
 
         return randMon
 
     #Creates offsprint from two parent pokemon teams
     def crossover(self,parent1, parent2):
-        #Finds midpoint of teams
+        #Finds  dpoint of teams
         midpoint = self.teamSize // 2
         #Offspring = First half of parent 1 + second half of parent 2
         offspring = parent1[:midpoint] + parent2[midpoint:]
@@ -129,6 +129,15 @@ class GenAlg:
             
 
     def countTypes(self):
+
+    #############################################
+    # ISSUE: Sometimes the submit function gets
+    # gets stuck in this function after it prints
+    # half of the team. Usually this error seems
+    # to occur after using the random button
+    # after taking a member out.
+    #############################################
+
         print("Starting Count Types")
         teamTypes = {type_: 0 for type_ in self.types}
         print("Pokemon: ", self.user_pokemon)
@@ -137,11 +146,9 @@ class GenAlg:
             if (i == ""): continue
             currentRow = self.gen.loc[self.gen['Name'] == i]
             teamTypes[currentRow['Type 1'].values[0]] += 1
-
             if currentRow['Type 2'].values[0] != 'None':
                 teamTypes[currentRow['Type 2'].values[0]] += 1
-            
-            print("Checking2    ")
+        
         self.teamTypes = teamTypes
         print("Types: ", self.teamTypes)
         print("exiting Count Types")

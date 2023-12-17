@@ -24,7 +24,13 @@ def randomTeam():
             print(f"An error occurred: {str(e)}")
             response = jsonify({'error': 'Problem Generating Random Team'})
 
-
+#################################################
+# ISSUES: When the submit button is pressed after
+# changing one pokemon. The other pokemon are 
+# cleared from the dictionary. Only the newly 
+# selected one is left. 
+#################################################
+            
 pokemonTeam = {}
 
 
@@ -44,16 +50,12 @@ def button_pressed():
             Model.user_pokemon = list(pokemonTeam.values())
             Model.genDriver()
             Model.run()
-            print("Best Pokemon: ", Model.bestPokemon)
+            # print("Best Pokemon: ", Model.bestPokemon)
             print("Best Team: ", Model.bestTeam)
 
             newMons = [x for x in Model.bestTeam if x not in Model.user_pokemon]
-
-            print("New Pokemon: ", newMons)
-
-            # print(Model.user_pokemon)
-            res = [i for i in Model.bestTeam if i not in Model.user_pokemon]
-            return jsonify(result=res)
+            print("Sending ", newMons, "to frontend")
+            return jsonify(result=newMons)
         else:
             result = {'message': 'Button not pressed.'}
             print(result)

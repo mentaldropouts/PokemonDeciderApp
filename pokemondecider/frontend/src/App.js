@@ -11,11 +11,12 @@ function App() {
 
   useEffect(() => {
     // This code will run after bestPokemonData has been updated
-    console.log("Best: ", bestPokemonData);
+    // console.log("Best: ", bestPokemonData);
     const div = document.getElementById("10");
     const button = document.getElementById('9');
     button.style.backgroundColor = '#e75c37';
     div.textContent = bestPokemonData;
+
 }, [bestPokemonData]);  
 
 // Define a function to receive random team data
@@ -33,6 +34,9 @@ function App() {
       const button = document.getElementById('9');
       button.style.backgroundColor = 'green';
       const result = await handleButtonClick();
+
+      console.log("NEW POKEMON: ", result)
+      
       setBestPokemonData(result);
     } catch (error) {
       console.error('Error in handleTeamDataLoaded:', error);

@@ -21,7 +21,7 @@ const handleButtonClick = async () => {
 
             // Update the state or handle the response as needed
             console.log("Result: ",data.result[0]);
-            return data.result[0]
+            return data.result
         }
 
     } catch (error) {
