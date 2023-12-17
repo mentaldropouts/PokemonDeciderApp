@@ -13,10 +13,16 @@ print("Starting Backend")
 api = Flask(__name__)
 CORS(api, origins="http://localhost:3001")
 
-@api.route('/test')
+@api.route('/RandPokeData')
 def randomTeam():
-    response_body = createTeamDriver()
-    return response_body
+    try:
+        response_body = createTeamDriver()
+        for i in response_body:
+            print(response_body[i]['name'])
+        return response_body
+    except Exception as e:
+            print(f"An error occurred: {str(e)}")
+            response = jsonify({'error': 'Problem Generating Random Team'})
 
 
 pokemonTeam = {}
@@ -28,7 +34,6 @@ def button_pressed():
         # Assuming the request contains JSON data with a key 'buttonPressed'
         print("Getting Button")
         button_pressed = request.json.get('buttonPressed')
-
         # Perform some action based on the button_pressed value
         if button_pressed:
             # Perform an action when the button is pressed
@@ -37,27 +42,20 @@ def button_pressed():
             # print(pokemonTeam)
             Model = GenAlg("PokemonStats.csv")
             Model.user_pokemon = list(pokemonTeam.values())
-
-
             Model.genDriver()
             Model.run()
-
             print("Best Pokemon: ", Model.bestPokemon)
             print("Best Team: ", Model.bestTeam)
             print(Model.user_pokemon)
-            
             res = [i for i in Model.bestTeam if i not in Model.user_pokemon]
-            
             return jsonify(result=res)
-            
-            
         else:
             result = {'message': 'Button not pressed.'}
             print(result)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
 
 @api.route('/PokeData', methods=['POST', 'OPTIONS'])
 def receive_data_from_frontend():

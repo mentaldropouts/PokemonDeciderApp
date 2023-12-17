@@ -3,9 +3,10 @@ import { statData } from "./Stats"
 import { typeData } from "./Types"
 import sendDataToBackend from './sendTeam'
 
-function PokemonDropdown( {label} ) {
-
+function PokemonDropdown( { label, randTeamData } ) {
+  
   const [selectedPokemonData, setSelectedPokemonData] = useState({
+    
     name: "MissingNo.",
     id: "0",
     total: "0",
@@ -21,10 +22,41 @@ function PokemonDropdown( {label} ) {
     label: {label}
   });
 
-    // handles dropdown operations
+
+  const indexValue = parseInt(label, 10) - 1
+  useEffect(() => {   
+    // Handle changes in randTeamData
+    if (randTeamData && randTeamData.length > indexValue) {
+      let curPokemon = randTeamData[indexValue];
+      console.log(curPokemon);
+      handleRandomData(curPokemon);
+    }
+  }, [randTeamData, indexValue]);
+
+  const handleRandomData = (curPokemon) =>{
+    const ID = curPokemon.ID;
+    setSelectedPokemonData({
+      name: curPokemon.name,
+      id: curPokemon.ID,
+      total: curPokemon.stats.hp + curPokemon.stats.attack + 
+      curPokemon.stats.defense + curPokemon.stats.spattack + 
+      curPokemon.stats.spdefense + curPokemon.stats.speed,
+      hp: curPokemon.stats.hp,
+      attack: curPokemon.stats.attack,
+      defense: curPokemon.stats.defense,
+      spAtk: curPokemon.stats.spattack,
+      spDef: curPokemon.stats.spdefense,
+      speed: curPokemon.stats.speed,
+      type1: typeData[ID][0],
+      type2: typeData[ID][1],
+      image: `pkmnSprites/pkmn${ID}.png`,
+      label: {label}
+    })
+  }
+
+  // handles dropdown operations
   const handleSlottingData = (event) => {
     const ID = event.target.value;
-
     setSelectedPokemonData({
       name: statData[ID].Name,
       id: ID,
@@ -49,6 +81,7 @@ function PokemonDropdown( {label} ) {
 
     useEffect(() => {
       if (selectedPokemonData.id) {
+        // console.log(randTeamData)
         sendDataToBackend(selectedPokemonData, label);
       }
     },[selectedPokemonData.id])

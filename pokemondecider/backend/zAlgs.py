@@ -5,20 +5,18 @@ import copy
 def createRandTeamOfFive(dataSet):
     team = {}
     dataSize = len(dataSet)
+    print(dataSize)
     for i in range(5):
-        num = str(random.randint(1, 150))
+        num = str(random.randint(1, dataSize))
         newPokemon = dataSet[num]
         newPokemon["ID"] = num
         team[i] = newPokemon
-
     return team
 
 # * works for any size team as long as it is in the format of a dictionary such as {{memberNum : memberStats}, ...}
 def getTeamStrengths(team, pokemonTypes, typeStrengths, typeList):
-
     # * initialize dict where typing is key and values are 0
     teamStrengths = {type: 0 for type in typeList}
-    
     for pokemon in team:
         # * get types for each pokemon
         types = pokemonTypes[team[pokemon]["ID"]]
@@ -30,17 +28,13 @@ def getTeamStrengths(team, pokemonTypes, typeStrengths, typeList):
                 if strength not in teamStrengths:
                     print("Invalid strength String --", strength, "--.")
                     return False
-                
                 teamStrengths[strength] += 1    # * adjust values
-
     return teamStrengths
     
 # * works for any size team as long as it is in the format of a dictionary such as {{memberNum : memberStats}, ...}
 def getTeamWeaknesses(team, pokemonTypes, typeWeaknesses, typeList):
-
     # * initialize dict where typing is key and values are 0
     teamWeaknesses = {type: 0 for type in typeList}
-    
     for pokemon in team:
         # * get types for each pokemon
         types = pokemonTypes[team[pokemon]["ID"]]
@@ -52,9 +46,7 @@ def getTeamWeaknesses(team, pokemonTypes, typeWeaknesses, typeList):
                 if weakness not in teamWeaknesses:
                     print("Invalid strength String --", weakness, "--.")
                     return False
-                
                 teamWeaknesses[weakness] += 1   # * adjust values
-
     return teamWeaknesses
 
 # * finds optimal sixth pokemon for your team of five
@@ -165,7 +157,7 @@ def createTeamDriver():
     # For testing functionallity
     pokemonList = [1,2,3,5,6]
     # For Generating random team
-    randomList = random.sample(range(0,151),5)
+    randomList = random.sample(range(0,len(FULLPOKEMONSTATS)),5)
 
     newTeam = createTeam(randomList,FULLPOKEMONSTATS)
 
