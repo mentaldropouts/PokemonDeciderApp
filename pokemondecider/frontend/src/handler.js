@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import axios from "axios"
-import handleButtonClick from './sendButton'
+// import handleButtonClick from './sendButton'
 
 
 function Handler(props) {
- const randKeys = [];
+//  const randKeys = [];
  const [TeamData,SetTeamData] = useState();
 
  useEffect(() => {

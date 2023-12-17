@@ -11,7 +11,7 @@ from sixth_pokemon_GA import GenAlg
 print("Starting Backend")
 
 api = Flask(__name__)
-CORS(api)
+CORS(api, origins="http://localhost:3001")
 
 @api.route('/test')
 def randomTeam():
@@ -64,10 +64,11 @@ def receive_data_from_frontend():
     if request.method == 'OPTIONS':
         # Handle preflight request
         response = jsonify({'message': 'Preflight request successful'})
+        return ('', 204)
     else:
         try:
             data_from_frontend = request.get_json()
-            
+
             print(data_from_frontend["name"], ":", data_from_frontend["label"]["label"])   
         
             currentName = data_from_frontend["name"]

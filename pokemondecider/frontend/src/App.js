@@ -1,16 +1,11 @@
 import './App.css';
 import  PokemonDropdown  from "./front"
-import { statData } from './Stats';
-import Handler from "./handler"
 import { useState, useEffect } from'react';
-import BestPokemon from './front2';
 import handleButtonClick from './sendButton';
-
-
 
 function App() {
 
-  const [RandTeam,SetRandTeam] = useState();
+  // const [RandTeam,SetRandTeam] = useState();
   const [bestPokemonData, setBestPokemonData] = useState("");
 
   useEffect(() => {
@@ -25,10 +20,10 @@ function App() {
 
 
   // Define a function to receive the data from Handler
-  const handleTeamDataRandom = (data) => {
-  SetRandTeam(data);
-  console.log(RandTeam);
-  };
+  // const handleTeamDataRandom = (data) => {
+  // SetRandTeam(data);
+  // console.log(RandTeam);
+  // };
 
 
 
