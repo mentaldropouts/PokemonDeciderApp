@@ -4,7 +4,6 @@ import { typeData } from "./Types"
 import sendDataToBackend from './sendTeam'
 
 function PokemonDropdown( { label, randTeamData } ) {
-  
   const [selectedPokemonData, setSelectedPokemonData] = useState({
     
     name: "MissingNo.",
@@ -21,7 +20,6 @@ function PokemonDropdown( { label, randTeamData } ) {
     image: 'pkmnSprites/pkmn0.png',
     label: {label}
   });
-
 
   const indexValue = parseInt(label, 10) - 1
   useEffect(() => {   

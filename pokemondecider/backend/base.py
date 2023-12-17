@@ -46,7 +46,12 @@ def button_pressed():
             Model.run()
             print("Best Pokemon: ", Model.bestPokemon)
             print("Best Team: ", Model.bestTeam)
-            print(Model.user_pokemon)
+
+            newMons = [x for x in Model.bestTeam if x not in Model.user_pokemon]
+
+            print("New Pokemon: ", newMons)
+
+            # print(Model.user_pokemon)
             res = [i for i in Model.bestTeam if i not in Model.user_pokemon]
             return jsonify(result=res)
         else:
@@ -66,16 +71,14 @@ def receive_data_from_frontend():
     else:
         try:
             data_from_frontend = request.get_json()
-
             print(data_from_frontend["name"], ":", data_from_frontend["label"]["label"])   
-        
             currentName = data_from_frontend["name"]
-
             currentLabel = data_from_frontend["label"]["label"]
 
-            pokemonTeam[currentLabel] = currentName
+            if (currentName != "MissingNo."):
+                pokemonTeam[currentLabel] = currentName
+            else: pokemonTeam.pop(currentLabel)
             # Process the data as needed
-
             print(pokemonTeam)
             print()
 

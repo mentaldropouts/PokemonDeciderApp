@@ -84,7 +84,7 @@ class GenAlg:
     #Calculates the fitness or total stats of a given Pokemon team
     def fitness(self,pokemon_team):
 
-        print("POKEMON TEAM: ", pokemon_team)
+        # print("POKEMON TEAM: ", pokemon_team)
         
         team_stats = self.gen[self.gen['Name'].isin(pokemon_team)].sum()
         total_stats = team_stats['HP'] + team_stats['Attack'] + team_stats['Defense'] + team_stats['SpAtk']  + team_stats['SpDef'] + team_stats['Speed']
@@ -118,7 +118,6 @@ class GenAlg:
 
     #Mutate by randomly replacing one pokemon with another
     def mutate(self,pokemon_team, mutation_rate, gen):
-        
         if random.random() < mutation_rate:
             #random index
             i = 0
@@ -130,19 +129,19 @@ class GenAlg:
             
 
     def countTypes(self):
-
         print("Starting Count Types")
-
         teamTypes = {type_: 0 for type_ in self.types}
-
         print("Pokemon: ", self.user_pokemon)
         for i in self.user_pokemon:
+            print(i)    
+            if (i == ""): continue
             currentRow = self.gen.loc[self.gen['Name'] == i]
             teamTypes[currentRow['Type 1'].values[0]] += 1
 
             if currentRow['Type 2'].values[0] != 'None':
                 teamTypes[currentRow['Type 2'].values[0]] += 1
-
+            
+            print("Checking2    ")
         self.teamTypes = teamTypes
         print("Types: ", self.teamTypes)
         print("exiting Count Types")
@@ -202,6 +201,7 @@ class GenAlg:
         self.countTypes()
 
         print(self.user_pokemon, "\n")
+        print("Number of Pokemon: ", len(self.user_pokemon))
     
         #Generating initial population of random pokemon teams
         print("Populating")

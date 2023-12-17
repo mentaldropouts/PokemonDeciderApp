@@ -54,8 +54,8 @@ function App() {
           <div class="bestPokemon">
             <div class="buttonRow">
             <button class="Button" id ="8" onClick={handleTeamDataRandom}>Random</button>
-
             <button class="Button" id ="9" onClick={handleTeamDataLoaded}>Submit</button>
+            
             <div class="name1" id="10"> </div>
             </div>
         </div>
