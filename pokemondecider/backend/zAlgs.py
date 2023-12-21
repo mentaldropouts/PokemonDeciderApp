@@ -7,7 +7,7 @@ def createRandTeamOfFive(dataSet):
     dataSize = len(dataSet)
     print(dataSize)
     for i in range(5):
-        num = str(random.randint(1, dataSize))
+        num = str(random.randint(1, len(dataSize)))
         newPokemon = dataSet[num]
         newPokemon["ID"] = num
         team[i] = newPokemon
@@ -70,7 +70,6 @@ def findOptimalSixth(initialTeam, pokemonTypes, typeStrengths, typeWeaknesses, t
         print("test pokemon score: %.3f" % testScore,"--", dataSet[pokemon]["Name"], "| best score so far: %.3f" % bestScore, "--", dataSet[bestID]["Name"])
    
     return finalTeam
-
 
 # * calculate the score for a team of six given the coverage(either initialStrengths or initialWeaknesses) and return an int
 # * scales to give more weight to the coverage types of lesser value to increase width of coverage

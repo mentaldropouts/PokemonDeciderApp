@@ -1,13 +1,25 @@
 import './App.css';
 import  PokemonDropdown  from "./front"
+// import GetBestInfo from './getBestInfo'
 import handleButtonClick from './sendButton'
+import { statData } from './Stats';
 import getRandomData from './sendRandTeam';
 import { useState, useEffect } from'react'
+import BestPokemon from './frontBest';
 
+function findKeyByValue(myObject, value) {
+  for (const key in myObject) {
+
+      if (myObject[key]["Name"] === value) {
+          return key;
+      }
+    }
+}
 
 function App() {
-  const [bestPokemonData, setBestPokemonData] = useState("");
-  const [RandTeam, setRandTeam] = useState()
+  const [bestPokemonName, setBestPokemonName] = useState("");
+  const [RandTeam, setRandTeam] = useState();
+  const bestPokemonID = [];
 
   useEffect(() => {
     // This code will run after bestPokemonData has been updated
@@ -15,9 +27,8 @@ function App() {
     const div = document.getElementById("10");
     const button = document.getElementById('9');
     button.style.backgroundColor = '#e75c37';
-    div.textContent = bestPokemonData;
-
-}, [bestPokemonData]);  
+    // div.textContent = bestPokemonName;
+}, [bestPokemonName]);  
 
 // Define a function to receive random team data
   async function handleTeamDataRandom() {
@@ -34,13 +45,26 @@ function App() {
       const button = document.getElementById('9');
       button.style.backgroundColor = 'green';
       const result = await handleButtonClick();
-
       console.log("NEW POKEMON: ", result)
+
+      //#######################################################################
+      // There is a problem here because the file "Stats.js" does not have 
+      // all of the pokemon that FullPokemonStats.json has. Like Shaymin Land
+      // Forme is in pokemon.csv but not in the other two files
+      //#######################################################################
+
+      // Getting the ID of the resulting best pokemon
+      for (const element of result){
+        console.log(element)
+        const value = findKeyByValue(statData, element)
+        bestPokemonID.push(value)
+        setBestPokemonName(result);
+      }
       
-      setBestPokemonData(result);
     } catch (error) {
       console.error('Error in handleTeamDataLoaded:', error);
     }
+    console.log("Best ID:", bestPokemonID)
   }
 
   return (
@@ -60,7 +84,7 @@ function App() {
             <button class="Button" id ="8" onClick={handleTeamDataRandom}>Random</button>
             <button class="Button" id ="9" onClick={handleTeamDataLoaded}>Submit</button>
             
-            <div class="name1" id="10"> </div>
+            <BestPokemon label="6" ID="10"/>
             </div>
         </div>
     </div>
