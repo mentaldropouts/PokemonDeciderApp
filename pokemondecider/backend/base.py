@@ -18,7 +18,7 @@ def randomTeam():
     try:
         response_body = createTeamDriver()
         for i in response_body:
-            print(response_body[i]['name'])
+            print(response_body[i]['Name'])
         return response_body
     except Exception as e:
             print(f"An error occurred: {str(e)}")
@@ -46,7 +46,7 @@ def button_pressed():
             result = {'message': 'Button pressed on the frontend!'}
             print(result)
             # print(pokemonTeam)
-            Model = GenAlg("PokemonStats.csv")
+            Model = GenAlg("stats.csv")
             Model.user_pokemon = list(pokemonTeam.values())
             Model.genDriver()
             Model.run()

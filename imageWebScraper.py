@@ -8,7 +8,6 @@ request = requests.get('https://pokemondb.net/sprites').text
 soup = BeautifulSoup(request, 'html.parser') 
 # storing image objects as all HTML elements of type div w/ img
 images = soup.select("div img")
-# for the first 151 pokemon 
 for i in range(1, 1100):
     # store the image url (identified by src element)
     images_url = images[i]['src']

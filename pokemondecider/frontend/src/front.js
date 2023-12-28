@@ -34,17 +34,15 @@ function PokemonDropdown( { label, randTeamData } ) {
   const handleRandomData = (curPokemon) =>{
     const ID = curPokemon.ID;
     setSelectedPokemonData({
-      name: curPokemon.name,
+      name: curPokemon.Name,
       id: curPokemon.ID,
-      total: curPokemon.stats.hp + curPokemon.stats.attack + 
-      curPokemon.stats.defense + curPokemon.stats.spattack + 
-      curPokemon.stats.spdefense + curPokemon.stats.speed,
-      hp: curPokemon.stats.hp,
-      attack: curPokemon.stats.attack,
-      defense: curPokemon.stats.defense,
-      spAtk: curPokemon.stats.spattack,
-      spDef: curPokemon.stats.spdefense,
-      speed: curPokemon.stats.speed,
+      total: curPokemon.Total,
+      hp: curPokemon.HP,
+      attack: curPokemon.Attack,
+      defense: curPokemon.Defense,
+      spAtk: curPokemon.SpAtk,
+      spDef: curPokemon.SpDef,
+      speed: curPokemon.Speed,
       type1: typeData[ID][0],
       type2: typeData[ID][1],
       image: `pkmnSprites/pkmn${ID}.png`,

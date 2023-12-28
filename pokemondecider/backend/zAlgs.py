@@ -1,6 +1,7 @@
 import json
 import random
 import copy
+import csv
 
 def createRandTeamOfFive(dataSet):
     team = {}
@@ -93,59 +94,48 @@ def calculateScore(members, pokemonTypes, typeStrengths, typeWeaknesses, typeLis
 # * works for any number of pokemon
 
 def createTeam(pokedexNumArr, dataSet):
+    print("CREATING TEAM")
     newTeam = {}
     for i in range(len(pokedexNumArr)):
         # * check if team already contains pokemon as a team cannot have duplicate pokemon.
-        if pokedexNumArr[i] not in newTeam:
-            newTeam[pokedexNumArr[i]] = dataSet[str(pokedexNumArr[i])]
+        print()
+        if int(pokedexNumArr[i]) not in newTeam:
+            newTeam[pokedexNumArr[i]] = dataSet[pokedexNumArr[i]]
+            print("new added ", newTeam[pokedexNumArr[i]] )
             newTeam[pokedexNumArr[i]]["ID"] = pokedexNumArr[i]
         else:
             print("Pokemon \"", pokedexNumArr[i], ":", dataSet[str(pokedexNumArr[i])]["Name"], "\" is a duplicate and cannot be added")
+
     return newTeam
+
+
+
+def load_csv(file_path, key_column):
+    try:
+        with open(file_path, newline='') as csvfile:
+            csv_data = csv.DictReader(csvfile)
+            return {int(row[key_column]): row for row in csv_data}
+    except FileNotFoundError:
+        print(f"Error: File not found at '{file_path}'")
+        return None
+    except Exception as e:
+        print(f"Error loading CSV from '{file_path}': {e}")
+        return None
+
 
 def createTeamDriver():
 
     print("Running createTeamDriver!")
     # Purpose: to handle the json files and utilitze those to create teams 
     # in a function that can be called externally by a flask route
-    try:
 
-        f = open('Data/FullPokemonStats.json')
-        FULLPOKEMONSTATS = json.load(f)
-        f.close()
-    except:
-        print("Error: Data in FULLPOKEMONSTATS not loaded")
-        return 0
-   
-    try:
-        f = open('Data/FullPokemonTypes.json')
-        POKEMONTYPES = json.load(f)
-        f.close()
-    except:
-        print("Error: Data in POKEMONTYPES not loaded")
-        return 0
-    try:
-        f = open('Data/TypeStrengths.json')
-        TYPESTRENGTHS = json.load(f)
-        f.close()
-    except:
-        print("Error: Data in TYPESTRENGTHS not loaded")
-        return 0
-    try:
-        f = open('Data/TypeWeaknesses.json')
-        TYPEWEAKNESSES = json.load(f)
-        f.close()
-    except:
-        print("Error: Data in TYPEWEAKNESSES not loaded")
-        return 0
-    try:
+    # Load CSV data
+    FULLPOKEMONSTATS = load_csv('stats.csv','ID')
 
-        f = open('Data/TypeImmunities.json')
-        TYPEIMMUNITIES = json.load(f)
-        f.close()
-    except:
-        print("Error: Data in TYPEIMMUNITIES not loaded")
+    print(FULLPOKEMONSTATS[1])
+    if any(data is None for data in [FULLPOKEMONSTATS]):
         return 0
+
 
     TYPELIST = [
     "Normal", "Fire", "Water", "Grass", "Electric",
@@ -157,14 +147,14 @@ def createTeamDriver():
     pokemonList = [1,2,3,5,6]
     # For Generating random team
     randomList = random.sample(range(0,len(FULLPOKEMONSTATS)),5)
-
+    print(randomList)
     newTeam = createTeam(randomList,FULLPOKEMONSTATS)
 
     # for pokemon in newTeam:
         # print(pokemon,": ", newTeam[pokemon], end="\n")
         # print()
 
-
+    print("NEW TEAM FULL", newTeam) 
     return newTeam
 
 # if __name__ == '__main__':

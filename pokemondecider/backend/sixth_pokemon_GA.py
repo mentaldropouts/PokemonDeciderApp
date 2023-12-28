@@ -18,10 +18,6 @@ class GenAlg:
         self.user_pokemon = test
         self.gen = None
 
-        
-        
-
-
     #Recommends Pokemon whose types are effective against the types that may be a threat to current team.
     def find_6th_best_pokemon(self):
 

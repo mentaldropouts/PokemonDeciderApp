@@ -7,13 +7,16 @@ import getRandomData from './sendRandTeam';
 import { useState, useEffect } from'react'
 import BestPokemon from './frontBest';
 
-function findKeyByValue(myObject, value) {
-  for (const key in myObject) {
-
-      if (myObject[key]["Name"] === value) {
-          return key;
+function findKeyByValue(obj, value) {
+  return new Promise((resolve, reject) => {
+    Object.keys(obj).forEach(key => {
+      // console.log(obj[key]["Name"])
+      if (obj[key] === value) {
+        resolve(key);
       }
-    }
+    });
+    reject(new Error("Key not found"));
+  });
 }
 
 function App() {
@@ -55,8 +58,9 @@ function App() {
 
       // Getting the ID of the resulting best pokemon
       for (const element of result){
-        console.log(element)
-        const value = findKeyByValue(statData, element)
+        console.log("ELEMENT: ", element)
+        const value = await findKeyByValue(statData, element)
+        console.log("found value of ", value)
         bestPokemonID.push(value)
         setBestPokemonName(result);
       }
