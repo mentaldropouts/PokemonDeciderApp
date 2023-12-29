@@ -4,7 +4,6 @@ import pandas as pd
 import os
 
 
-test = ["Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon"]
 
 class GenAlg:
 
@@ -15,18 +14,13 @@ class GenAlg:
         self.maxGen = maxGenerations
         self.popSize = populationSize
         self.mutRate = mutationRate
-        self.user_pokemon = test
         self.gen = None
 
     #Recommends Pokemon whose types are effective against the types that may be a threat to current team.
     def find_6th_best_pokemon(self):
-
-        print("Starting 6th Best Function")
-
+        print("Starting 6th Best Function",end="\n")
         best_6th_pokemon = None
         best_6th_stats = np.zeros(6)  # Initialize with zeros
-        
-
         #Iterating thorugh each pokemon in gen
         for pokemon_name in self.gen['Name']:
 
@@ -36,7 +30,7 @@ class GenAlg:
             if cleaned_pokemon_name not in self.user_pokemon:
                 # Calculate the total stats for the 6th Pokémon
                 total_stats = self.gen.loc[self.gen['Name'] == pokemon_name, 'HP':'Speed'].values.sum()
-                print("TotalStats: ", total_stats)
+                # print("TotalStats: ", total_stats)
 
                 # Calculate type effectiveness based on user's chosen Pokémon
                 type_effectiveness = np.zeros(18)  #18 = num of types
@@ -91,17 +85,11 @@ class GenAlg:
 
     #Creates random pokemon team
     def create_random_slots(self, gen):
-
-        # print("Creating Random Team!")
-
+        assert len(self.user_pokemon) != 6
         numRandomSlots =  6 - len(self.user_pokemon)
-
         randMon = random.sample(gen['Name'].tolist(), numRandomSlots)
-
         randMon = self.user_pokemon + randMon
-
         # print(randMon)
-
         return randMon
 
     #Creates offsprint from two parent pokemon teams
@@ -122,7 +110,6 @@ class GenAlg:
             #Replace Pokemon at index with a randomly chosen pokemon
             new_pokemon = random.choice(gen['Name'].tolist())
             pokemon_team[i] = new_pokemon
-            
 
     def countTypes(self):
 
@@ -134,25 +121,23 @@ class GenAlg:
     # after taking a member out.
     #############################################
 
-        print("Starting Count Types")
         teamTypes = {type_: 0 for type_ in self.types}
-        print("Pokemon: ", self.user_pokemon)
+        # print("Pokemon: ", self.user_pokemon)
         for i in self.user_pokemon:
             print(i)    
-            if (i == ""): continue
+            if (i == "MissingNo."): continue
             currentRow = self.gen.loc[self.gen['Name'] == i]
             teamTypes[currentRow['Type 1'].values[0]] += 1
             if currentRow['Type 2'].values[0] != 'None':
                 teamTypes[currentRow['Type 2'].values[0]] += 1
         
         self.teamTypes = teamTypes
-        print("Types: ", self.teamTypes)
+        # print("Types: ", self.teamTypes)
         print("exiting Count Types")
 
 
     def genDriver(self):
-
-        print("Starting Gen Driver")
+        # print("Starting Gen Driver")
         self.damageArray = np.array([[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1/2, 0, 1, 1, 1/2, 1],
                         [1, 1/2, 1/2, 1, 2, 2, 1, 1, 1, 1, 1, 2, 1/2, 1, 1/2, 1, 2, 1],
                         [1, 2, 1/2, 1, 1/2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1/2, 1, 1, 1],
@@ -175,10 +160,6 @@ class GenAlg:
         self.types = ["Normal", "Fire", "Water", "Electric", "Grass", "Ice",
                         "Fighting", "Poison", "Ground", "Flying", "Psychic",
                         "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"]
-        
-
-        # Reading and cleaning data
-        print("Reading File", self.file)
         try:
             
             self.gen = pd.read_csv(self.file).drop('ID', axis=1)
@@ -187,37 +168,29 @@ class GenAlg:
             print(f"Error reading this file:{e}")
         
         self.gen = self.gen[~self.gen['Name'].str.contains("Mega", case=False)]    
-
         self.gen['Type 2'].fillna('None', inplace=True)
-
         # Removing Lengendary and Mega
         filtered_OP = self.gen[self.gen['Total'] > 600]
         self.gen = self.gen.drop(filtered_OP.index)
         assert len(self.gen) > 200
 
     def run(self):
-        
-        print("Starting run function")
+        # print("Starting run function")
         #Variables for 6th pokemon and its stats
         best_6th_pokemon = None
-        
         self.countTypes()
-
-        print(self.user_pokemon, "\n")
-        print("Number of Pokemon: ", len(self.user_pokemon))
-    
+        # print(self.user_pokemon, "\n")
+        # print("Number of Pokemon: ", len(self.user_pokemon))
         #Generating initial population of random pokemon teams
-        print("Populating")
-        print(self.create_random_slots(self.gen))
-
+        # print("Populating")
+        # print(self.create_random_slots(self.gen))
         # Making as many random teams as popSize
         population = [self.create_random_slots(self.gen) for _ in range(self.popSize)]
-
         # Loop that runs every generation
         for generation in range(self.maxGen):
+            
             # Calculate fitness scores for teams
             fitness_scores = [self.fitness(team) for team in population]
-
             # Select half of the population as parents
             num_parents = self.popSize // 2
             parents = [population[i] for i in sorted(range(len(fitness_scores)), key=lambda x: fitness_scores[x], reverse=True)[:num_parents]]      
@@ -240,6 +213,9 @@ class GenAlg:
         self.bestTeam = best_team
         self.bestPokemon = best_6th_pokemon
 
+
+# ISSUE: when the button is pressed and best team is slotted, sometimes it puts the
+# sixth pokemon 
 
 
 

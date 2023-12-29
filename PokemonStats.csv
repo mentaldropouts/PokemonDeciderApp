@@ -1,5 +1,4 @@
 ID,Name,Total,HP,Attack,Defense,SpAtk,SpDef,Speed,Type 1,Type 2,Height,Weight
-0,MissingNo.,0,0,0,0,0,0,,,0,0
 1,Bulbasaur,318,45,49,49,65,65,45,Grass,Poison,0.7,6.9
 2,Ivysaur,405,60,62,63,80,80,60,Grass,Poison,1.0,13
 3,Venusaur,525,80,82,83,100,100,80,Grass,Poison,2.0,100

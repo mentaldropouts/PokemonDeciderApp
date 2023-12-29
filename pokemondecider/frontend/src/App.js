@@ -7,31 +7,33 @@ import getRandomData from './sendRandTeam';
 import { useState, useEffect } from'react'
 import BestPokemon from './frontBest';
 
+
+
+function App() {
+  const [bestPokemonName, setBestPokemonName] = useState("");
+  const [RandTeam, setRandTeam] = useState();
+  const bestPokemonID = []
+
+  useEffect(() => {
+    // This code will run after bestPokemonData has been updated
+    const div = document.getElementById("10");
+    const button = document.getElementById('9');
+    button.style.backgroundColor = '#e75c37';
+    div.textContent = bestPokemonName;
+
+}, [bestPokemonName]);  
+
+
 function findKeyByValue(obj, value) {
   return new Promise((resolve, reject) => {
     Object.keys(obj).forEach(key => {
-      // console.log(obj[key]["Name"])
-      if (obj[key] === value) {
+      if (obj[key]["Name"] === value) {
         resolve(key);
       }
     });
     reject(new Error("Key not found"));
   });
 }
-
-function App() {
-  const [bestPokemonName, setBestPokemonName] = useState("");
-  const [RandTeam, setRandTeam] = useState();
-  const bestPokemonID = [];
-
-  useEffect(() => {
-    // This code will run after bestPokemonData has been updated
-    // console.log("Best: ", bestPokemonData);
-    const div = document.getElementById("10");
-    const button = document.getElementById('9');
-    button.style.backgroundColor = '#e75c37';
-    // div.textContent = bestPokemonName;
-}, [bestPokemonName]);  
 
 // Define a function to receive random team data
   async function handleTeamDataRandom() {
@@ -48,7 +50,7 @@ function App() {
       const button = document.getElementById('9');
       button.style.backgroundColor = 'green';
       const result = await handleButtonClick();
-      console.log("NEW POKEMON: ", result)
+      button.style.backgroundColor = '#e75c37';
 
       //#######################################################################
       // There is a problem here because the file "Stats.js" does not have 
@@ -59,16 +61,16 @@ function App() {
       // Getting the ID of the resulting best pokemon
       for (const element of result){
         console.log("ELEMENT: ", element)
+        console.log("RESULT: ", result)
         const value = await findKeyByValue(statData, element)
-        console.log("found value of ", value)
-        bestPokemonID.push(value)
-        setBestPokemonName(result);
+        console.log("VALUE: ", value)
+        bestPokemonID.append(value)
       }
       
     } catch (error) {
       console.error('Error in handleTeamDataLoaded:', error);
     }
-    console.log("Best ID:", bestPokemonID)
+    // console.log("Best ID:", bestPokemonID)
   }
 
   return (
@@ -88,7 +90,8 @@ function App() {
             <button class="Button" id ="8" onClick={handleTeamDataRandom}>Random</button>
             <button class="Button" id ="9" onClick={handleTeamDataLoaded}>Submit</button>
             
-            <BestPokemon label="6" ID="10"/>
+            {/* <BestPokemon label="6" ID=/> */}
+            <div class="name" id="10"></div>
             </div>
         </div>
     </div>

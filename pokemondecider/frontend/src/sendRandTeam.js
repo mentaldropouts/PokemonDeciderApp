@@ -8,8 +8,10 @@ const getRandomData = async () => {
     });
 
     const res = response.data;
+    // console.log("DATA: ", res)
     const keys = Object.keys(res);
     const data = keys.map((key) => res[key]);
+    
     console.log("Data received in getRandomData:", data);
     return data
   } catch (error) {

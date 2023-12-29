@@ -16,6 +16,7 @@
   "scripts": {
     "start": "PORT=3001 react-scripts --max_old_space_size=8128 start",
     "start-backend": "cd ../backend && flask run --debug",
+    "start-app": "npm start start-backend",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

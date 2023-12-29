@@ -26,7 +26,7 @@ function PokemonDropdown( { label, randTeamData } ) {
     // Handle changes in randTeamData
     if (randTeamData && randTeamData.length > indexValue) {
       let curPokemon = randTeamData[indexValue];
-      console.log(curPokemon);
+      // console.log(curPokemon);
       handleRandomData(curPokemon);
     }
   }, [randTeamData, indexValue]);

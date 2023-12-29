@@ -18,7 +18,7 @@ def randomTeam():
     try:
         response_body = createTeamDriver()
         for i in response_body:
-            print(response_body[i]['Name'])
+            print("Respnse ", response_body[i]['Name'])
         return response_body
     except Exception as e:
             print(f"An error occurred: {str(e)}")
@@ -33,26 +33,22 @@ def randomTeam():
             
 pokemonTeam = {}
 
-
 @api.route('/buttonPressed', methods=['POST'])
 def button_pressed():
     try:
         # Assuming the request contains JSON data with a key 'buttonPressed'
         print("Getting Button")
+        assert len(pokemonTeam) <= 5
         button_pressed = request.json.get('buttonPressed')
         # Perform some action based on the button_pressed value
         if button_pressed:
             # Perform an action when the button is pressed
             result = {'message': 'Button pressed on the frontend!'}
-            print(result)
-            # print(pokemonTeam)
-            Model = GenAlg("stats.csv")
+            Model = GenAlg("PokemonStats.csv")
             Model.user_pokemon = list(pokemonTeam.values())
             Model.genDriver()
             Model.run()
-            # print("Best Pokemon: ", Model.bestPokemon)
-            print("Best Team: ", Model.bestTeam)
-
+           
             newMons = [x for x in Model.bestTeam if x not in Model.user_pokemon]
             print("Sending ", newMons, "to frontend")
             return jsonify(result=newMons)
@@ -64,7 +60,7 @@ def button_pressed():
         return jsonify({'error': str(e)}), 500
 
 
-@api.route('/PokeData', methods=['POST', 'OPTIONS'])
+@api.route('/PokeData', methods=['POST', 'OPTxIONS'])
 def receive_data_from_frontend():
     if request.method == 'OPTIONS':
         # Handle preflight request
@@ -72,16 +68,19 @@ def receive_data_from_frontend():
         return ('', 204)
     else:
         try:
+            print("pokemon: ", pokemonTeam, end="\n\n")
             data_from_frontend = request.get_json()
-            print(data_from_frontend["name"], ":", data_from_frontend["label"]["label"])   
+            # print(data_from_frontend["name"], ":", data_from_frontend["label"]["label"])      
             currentName = data_from_frontend["name"]
             currentLabel = data_from_frontend["label"]["label"]
 
             if (currentName != "MissingNo."):
                 pokemonTeam[currentLabel] = currentName
-            else: pokemonTeam.pop(currentLabel)
+            else:
+                print("popping ", currentLabel)
+                pokemonTeam.pop(currentLabel)
+
             # Process the data as needed
-            print(pokemonTeam)
             print()
 
             response = jsonify({'message': 'Data received and processed successfully'})

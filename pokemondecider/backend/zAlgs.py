@@ -130,9 +130,8 @@ def createTeamDriver():
     # in a function that can be called externally by a flask route
 
     # Load CSV data
-    FULLPOKEMONSTATS = load_csv('stats.csv','ID')
-
-    print(FULLPOKEMONSTATS[1])
+    FULLPOKEMONSTATS = load_csv('PokemonStats.csv','ID')
+    # print(FULLPOKEMONSTATS[1])
     if any(data is None for data in [FULLPOKEMONSTATS]):
         return 0
 
@@ -147,7 +146,7 @@ def createTeamDriver():
     pokemonList = [1,2,3,5,6]
     # For Generating random team
     randomList = random.sample(range(0,len(FULLPOKEMONSTATS)),5)
-    print(randomList)
+    # print(randomList)
     newTeam = createTeam(randomList,FULLPOKEMONSTATS)
 
     # for pokemon in newTeam:
