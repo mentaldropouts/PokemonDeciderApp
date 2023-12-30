@@ -10,15 +10,12 @@ const handleButtonClick = async () => {
             },
             body: JSON.stringify({ buttonPressed: true }),
         });
-
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         else{
-
             // Parse the JSON in the response
             const data = await response.json();
-
             // Update the state or handle the response as needed
             console.log("Result: ",data.result[0]);
             return data.result
@@ -28,7 +25,5 @@ const handleButtonClick = async () => {
         console.error('Fetch error:', error);
     }
 };
-
-
 
 export default handleButtonClick;

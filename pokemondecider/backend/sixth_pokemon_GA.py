@@ -8,7 +8,6 @@ import os
 class GenAlg:
 
     def __init__(self,fileName, maxGenerations = 500, populationSize = 20, mutationRate = 0.1):
-
         self.file = fileName
         self.teamSize = 6
         self.maxGen = maxGenerations
@@ -23,7 +22,6 @@ class GenAlg:
         best_6th_stats = np.zeros(6)  # Initialize with zeros
         #Iterating thorugh each pokemon in gen
         for pokemon_name in self.gen['Name']:
-
             #Clean the pokemon name by removing leading and trailing spaces
             cleaned_pokemon_name = pokemon_name.strip()
             #If pokemon is not already chosen by the user
@@ -31,10 +29,8 @@ class GenAlg:
                 # Calculate the total stats for the 6th Pokémon
                 total_stats = self.gen.loc[self.gen['Name'] == pokemon_name, 'HP':'Speed'].values.sum()
                 # print("TotalStats: ", total_stats)
-
                 # Calculate type effectiveness based on user's chosen Pokémon
                 type_effectiveness = np.zeros(18)  #18 = num of types
-
                 for user_choice in self.user_pokemon:
                     # print("In 2nd for-loop")
                     cleaned_user_choice = user_choice.strip()
@@ -42,7 +38,6 @@ class GenAlg:
                     if cleaned_user_choice not in self.gen['Name'].values:
                         print(f"User's Pokémon '{user_choice}' not found in the dataset.")
                         continue
-                    
                     # print("Calculating...")
                     #Types of user's chosen pokemon
                     user_choice_types = self.gen.loc[self.gen['Name'] == cleaned_user_choice, 'Type 1':'Type 2'].values
@@ -60,36 +55,29 @@ class GenAlg:
                     # print("Exiting 3rd For Loop")
                     # Calculate reverse type effectiveness score to find complementing types
                     reverse_type_effectiveness = np.ones(18) - type_effectiveness
-                
                 # Combine total stats and type effectiveness score
                 combined_effectiveness = total_stats * reverse_type_effectiveness
-
                 #if combined score is higher than the current best
                 if combined_effectiveness.sum() > best_6th_stats.sum():
                     best_6th_stats = combined_effectiveness
                     best_6th_pokemon = pokemon_name
-
         return best_6th_pokemon
 
     #Calculates the fitness or total stats of a given Pokemon team
     def fitness(self,pokemon_team):
-
-        # print("POKEMON TEAM: ", pokemon_team)
-        
         team_stats = self.gen[self.gen['Name'].isin(pokemon_team)].sum()
         total_stats = team_stats['HP'] + team_stats['Attack'] + team_stats['Defense'] + team_stats['SpAtk']  + team_stats['SpDef'] + team_stats['Speed']
         typeCoverage = sum(1 for value in self.teamTypes.values() if value > 0)
-
         return typeCoverage * total_stats
-
 
     #Creates random pokemon team
     def create_random_slots(self, gen):
+        print("Entering Create Random Slots")
         assert len(self.user_pokemon) != 6
         numRandomSlots =  6 - len(self.user_pokemon)
         randMon = random.sample(gen['Name'].tolist(), numRandomSlots)
         randMon = self.user_pokemon + randMon
-        # print(randMon)
+        print("Exiting Create Random Slots")
         return randMon
 
     #Creates offsprint from two parent pokemon teams
@@ -112,15 +100,6 @@ class GenAlg:
             pokemon_team[i] = new_pokemon
 
     def countTypes(self):
-
-    #############################################
-    # ISSUE: Sometimes the submit function gets
-    # gets stuck in this function after it prints
-    # half of the team. Usually this error seems
-    # to occur after using the random button
-    # after taking a member out.
-    #############################################
-
         teamTypes = {type_: 0 for type_ in self.types}
         # print("Pokemon: ", self.user_pokemon)
         for i in self.user_pokemon:
@@ -130,11 +109,9 @@ class GenAlg:
             teamTypes[currentRow['Type 1'].values[0]] += 1
             if currentRow['Type 2'].values[0] != 'None':
                 teamTypes[currentRow['Type 2'].values[0]] += 1
-        
         self.teamTypes = teamTypes
         # print("Types: ", self.teamTypes)
         print("exiting Count Types")
-
 
     def genDriver(self):
         # print("Starting Gen Driver")
@@ -180,10 +157,10 @@ class GenAlg:
         best_6th_pokemon = None
         self.countTypes()
         # print(self.user_pokemon, "\n")
-        # print("Number of Pokemon: ", len(self.user_pokemon))
+
+        print("Number of Pokemon: ", len(self.user_pokemon))
         #Generating initial population of random pokemon teams
-        # print("Populating")
-        # print(self.create_random_slots(self.gen))
+
         # Making as many random teams as popSize
         population = [self.create_random_slots(self.gen) for _ in range(self.popSize)]
         # Loop that runs every generation
@@ -195,9 +172,10 @@ class GenAlg:
             num_parents = self.popSize // 2
             parents = [population[i] for i in sorted(range(len(fitness_scores)), key=lambda x: fitness_scores[x], reverse=True)[:num_parents]]      
             #Select half of population as parents
+            parent1 = parents[0]
+            parent2 = parents[1]
             new_generation = []
             while len(new_generation) < self.popSize:
-                parent1, parent2 = random.sample(parents, 2)
                 offspring = self.crossover(parent1, parent2)
                 self.mutate(offspring, self.mutRate, self.gen)
                 new_generation.append(offspring)

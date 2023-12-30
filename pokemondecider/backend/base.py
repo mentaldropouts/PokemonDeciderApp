@@ -35,6 +35,7 @@ pokemonTeam = {}
 
 @api.route('/buttonPressed', methods=['POST'])
 def button_pressed():
+    print("CURRENT TEAM: \n", pokemonTeam)
     try:
         # Assuming the request contains JSON data with a key 'buttonPressed'
         print("Getting Button")
@@ -48,17 +49,14 @@ def button_pressed():
             Model.user_pokemon = list(pokemonTeam.values())
             Model.genDriver()
             Model.run()
-           
             newMons = [x for x in Model.bestTeam if x not in Model.user_pokemon]
             print("Sending ", newMons, "to frontend")
             return jsonify(result=newMons)
         else:
             result = {'message': 'Button not pressed.'}
             print(result)
-
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
 
 @api.route('/PokeData', methods=['POST', 'OPTxIONS'])
 def receive_data_from_frontend():
@@ -73,16 +71,12 @@ def receive_data_from_frontend():
             # print(data_from_frontend["name"], ":", data_from_frontend["label"]["label"])      
             currentName = data_from_frontend["name"]
             currentLabel = data_from_frontend["label"]["label"]
-
             if (currentName != "MissingNo."):
                 pokemonTeam[currentLabel] = currentName
             else:
-                print("popping ", currentLabel)
+                print("POPPING: ", currentLabel,end="\n")   
                 pokemonTeam.pop(currentLabel)
-
             # Process the data as needed
-            print()
-
             response = jsonify({'message': 'Data received and processed successfully'})
         except Exception as e:
             print(f"An error occurred: {str(e)}")

@@ -5,7 +5,6 @@ import sendDataToBackend from './sendTeam'
 
 function PokemonDropdown( { label, randTeamData } ) {
   const [selectedPokemonData, setSelectedPokemonData] = useState({
-    
     name: "MissingNo.",
     id: "0",
     total: "0",
@@ -76,8 +75,7 @@ function PokemonDropdown( { label, randTeamData } ) {
       };
 
     useEffect(() => {
-      if (selectedPokemonData.id) {
-        // console.log(randTeamData)
+      if (selectedPokemonData.id) { 
         sendDataToBackend(selectedPokemonData, label);
       }
     },[selectedPokemonData.id])

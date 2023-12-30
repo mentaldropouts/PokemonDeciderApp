@@ -24,7 +24,7 @@ function App() {
 }, [bestPokemonName]);  
 
 
-function findKeyByValue(obj, value) {
+async function findKeyByValue(obj, value) {
   return new Promise((resolve, reject) => {
     Object.keys(obj).forEach(key => {
       if (obj[key]["Name"] === value) {
@@ -50,8 +50,9 @@ function findKeyByValue(obj, value) {
       const button = document.getElementById('9');
       button.style.backgroundColor = 'green';
       const result = await handleButtonClick();
+      console.log("RESULT:",  result)
       button.style.backgroundColor = '#e75c37';
-
+    
       //#######################################################################
       // There is a problem here because the file "Stats.js" does not have 
       // all of the pokemon that FullPokemonStats.json has. Like Shaymin Land
@@ -60,18 +61,16 @@ function findKeyByValue(obj, value) {
 
       // Getting the ID of the resulting best pokemon
       for (const element of result){
-        console.log("ELEMENT: ", element)
-        console.log("RESULT: ", result)
-        const value = await findKeyByValue(statData, element)
-        console.log("VALUE: ", value)
-        bestPokemonID.append(value)
-      }
-      
-    } catch (error) {
-      console.error('Error in handleTeamDataLoaded:', error);
+        try{
+          const value = await findKeyByValue(statData, element)
+          console.log("VALUE: ", value)   
+      } catch (error) {
+      console.error('Error in handleTeamDataLoaded1:', error);
     }
-    // console.log("Best ID:", bestPokemonID)
-  }
+  }}catch(error){
+    console.error('Error in top of handleTeamDataLoaded2: ', error)
+  }}
+
 
   return (
     <div className="App">
