@@ -10,7 +10,13 @@ import BestPokemon from './frontBest';
 
 
 function App() {
-  const [bestPokemonName, setBestPokemonName] = useState("");
+  const bestPokemonArray = [];
+  const [bestPokemonName, setBestPokemonName] = useState({
+    name: "",
+    id: "",
+    image: 'pkmnSprites/pkmn0.png'
+  });
+
   const [RandTeam, setRandTeam] = useState();
   const bestPokemonID = []
 
@@ -19,7 +25,8 @@ function App() {
     const div = document.getElementById("10");
     const button = document.getElementById('9');
     button.style.backgroundColor = '#e75c37';
-    div.textContent = bestPokemonName;
+    console.log("BEST POKEMON DATA: ", bestPokemonName)
+    // console.log("Best pokemon array: ", bestPokemonArray)
 
 }, [bestPokemonName]);  
 
@@ -63,7 +70,13 @@ async function findKeyByValue(obj, value) {
       for (const element of result){
         try{
           const value = await findKeyByValue(statData, element)
-          console.log("VALUE: ", value)   
+          console.log("VALUE: ", value)
+          setBestPokemonName({
+            name: statData[value]["Name"],
+            id: statData[value]["ID"],
+            image: `pkmnSprites/pkmn${statData[value]["ID"]}.png`
+          })
+          bestPokemonArray.push(bestPokemonName)
       } catch (error) {
       console.error('Error in handleTeamDataLoaded1:', error);
     }
@@ -88,9 +101,8 @@ async function findKeyByValue(obj, value) {
             <div class="buttonRow">
             <button class="Button" id ="8" onClick={handleTeamDataRandom}>Random</button>
             <button class="Button" id ="9" onClick={handleTeamDataLoaded}>Submit</button>
-            
-            {/* <BestPokemon label="6" ID=/> */}
-            <div class="name" id="10"></div>
+            {/* <BestPokemon data={bestPokemonName} label="6" id ="10"/>÷ */}
+            {/* <div class="name" id="10"></div> */}
             </div>
         </div>
     </div>

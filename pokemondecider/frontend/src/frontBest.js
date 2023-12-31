@@ -4,27 +4,18 @@ import { typeData } from "./Types"
 
 
 
-function BestPokemon( { label, ID } ) {
-
+function BestPokemon( { data, label, ID } ) {
+    console.log(data);
     useEffect(() => {
         handleSlottingData()
     }, [ID, label]);
 
 
 const [selectedPokemonData, setSelectedPokemonData] = useState({
-    name: "MissingNo.",
-    id: "0",
-    total: "0",
-    hp: "0",
-    attack: "0",
-    defense: "0",
-    spAtk: "0",
-    spDef: "0",
-    speed: "0",
-    type1: "",
-    type2: "",
+    name: "",
+    id: "",
     image: 'pkmnSprites/pkmn0.png',
-    label: {label}
+   
   });
 
   const handleSlottingData = () => {
