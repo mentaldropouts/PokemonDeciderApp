@@ -55,13 +55,14 @@ def button_pressed():
 
             newMons = [x for x in Model.bestTeam if x not in Model.user_pokemon]
             print("Sending ", newMons, "to frontend")
-            return jsonify(result=newMons)
+            return jsonify(result=newMons), 200
         else:
             result = {'message': 'Button not pressed.'}
             print(result)
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    print(f"Error processing request: {str(e)}")
+    return jsonify({'error': 'Internal Server Error'}), 500
 
 
 @api.route('/PokeData', methods=['POST', 'OPTIONS'])
