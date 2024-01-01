@@ -70,20 +70,19 @@ function PokemonDropdown( { label, randTeamData } ) {
     })
   };
 
-      // Shartending the name of the pokemon to be displayed
+// Slotting pokemon data that has been selected by user
       const onDataChange = (event) => {
         handleSlottingData(event);
       };
 
     useEffect(() => {
       if (selectedPokemonData.id) {
-        // console.log(randTeamData)
+        console.log("useEffect sendingDataToBackend: ", selectedPokemonData)
         sendDataToBackend(selectedPokemonData, label);
       }
     },[selectedPokemonData.id])
 
     return (
-
         <div class="dropdown">
         <div>Pokemon {label}</div>
         <label htmlFor="pokemonSelect"></label>
