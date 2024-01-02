@@ -1,5 +1,3 @@
-
-
 const handleButtonClick = async () => {
     try {
         // Send a POST request to the Flask server
@@ -10,19 +8,29 @@ const handleButtonClick = async () => {
             },
             body: JSON.stringify({ buttonPressed: true }),
         });
+
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        else{
-            // Parse the JSON in the response
-            const data = await response.json();
-            // Update the state or handle the response as needed
-            console.log("Result: ",data.result[0]);
-            return data.result
-        }
 
+        // Parse the JSON in the response
+        const data = await response.json();
+        
+        if (data && data.result) {
+            console.log("Received in handleButtonClick: ", data.result);
+            return data.result;
+        } else {
+            console.error('Invalid or undefined result in the response:', data);
+            // Handle the error or return an appropriate value
+            // For example, return an empty array or throw a new error
+            return [];
+        }
+        
     } catch (error) {
-        console.error('Fetch error:', error);
+        console.error('Fetch or parsing error:', error);
+        // Handle the error or return an appropriate value
+        // For example, return an empty array or throw a new error
+        return [];
     }
 };
 

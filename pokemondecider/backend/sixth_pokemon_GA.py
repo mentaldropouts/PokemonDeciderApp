@@ -66,18 +66,19 @@ class GenAlg:
     #Calculates the fitness or total stats of a given Pokemon team
     def fitness(self,pokemon_team):
         team_stats = self.gen[self.gen['Name'].isin(pokemon_team)].sum()
-        total_stats = team_stats['HP'] + team_stats['Attack'] + team_stats['Defense'] + team_stats['SpAtk']  + team_stats['SpDef'] + team_stats['Speed']
+        total_stats = int(team_stats['HP']) + int(team_stats['Attack']) + int(team_stats['Defense']) + int(team_stats['SpAtk'])  + int(team_stats['SpDef']) + int(team_stats['Speed'])
         typeCoverage = sum(1 for value in self.teamTypes.values() if value > 0)
         return typeCoverage * total_stats
 
     #Creates random pokemon team
     def create_random_slots(self, gen):
-        print("Entering Create Random Slots")
+        # print("Entering Create Random Slots")
         assert len(self.user_pokemon) != 6
         numRandomSlots =  6 - len(self.user_pokemon)
         randMon = random.sample(gen['Name'].tolist(), numRandomSlots)
-        randMon = self.user_pokemon + randMon
-        print("Exiting Create Random Slots")
+        # randMon = self.user_pokemon + randMon
+
+        # print("Exiting Create Random Slots")
         return randMon
 
     #Creates offsprint from two parent pokemon teams

@@ -35,11 +35,11 @@ pokemonTeam = {}
 
 @api.route('/buttonPressed', methods=['POST'])
 def button_pressed():
-    print("CURRENT TEAM: \n", pokemonTeam)
     try:
         # Assuming the request contains JSON data with a key 'buttonPressed'
         print("Getting Button")
-        assert len(pokemonTeam) <= 5
+        if len(pokemonTeam) > 5:
+            return jsonify({'error': 'Too many Pokemon in the team'}), 400
         button_pressed = request.json.get('buttonPressed')
         # Perform some action based on the button_pressed value
         if button_pressed:
@@ -52,13 +52,11 @@ def button_pressed():
             newMons = [x for x in Model.bestTeam if x not in Model.user_pokemon]
             print("Sending ", newMons, "to frontend")
             return jsonify(result=newMons)
-        else:
-            result = {'message': 'Button not pressed.'}
-            print(result)
     except Exception as e:
+        print(f"An error occurred: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
-@api.route('/PokeData', methods=['POST', 'OPTxIONS'])
+@api.route('/PokeData', methods=['POST', 'OPT   IONS'])
 def receive_data_from_frontend():
     if request.method == 'OPTIONS':
         # Handle preflight request
@@ -68,7 +66,7 @@ def receive_data_from_frontend():
         try:
             print("pokemon: ", pokemonTeam, end="\n\n")
             data_from_frontend = request.get_json()
-            # print(data_from_frontend["name"], ":", data_from_frontend["label"]["label"])      
+            print(data_from_frontend["name"], ":", data_from_frontend["label"]["label"])      
             currentName = data_from_frontend["name"]
             currentLabel = data_from_frontend["label"]["label"]
             if (currentName != "MissingNo."):

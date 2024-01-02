@@ -3,7 +3,7 @@ import { statData } from "./Stats"
 import { typeData } from "./Types"
 import sendDataToBackend from './sendTeam'
 
-function PokemonDropdown( { label, randTeamData } ) {
+function PokemonDropdown( { label, Data } ) {
   const [selectedPokemonData, setSelectedPokemonData] = useState({
     name: "MissingNo.",
     id: "0",
@@ -22,13 +22,13 @@ function PokemonDropdown( { label, randTeamData } ) {
 
   const indexValue = parseInt(label, 10) - 1
   useEffect(() => {   
-    // Handle changes in randTeamData
-    if (randTeamData && randTeamData.length > indexValue) {
-      let curPokemon = randTeamData[indexValue];
+    // Handle changes in Data
+    if (Data && Data.length > indexValue) {
+      let curPokemon = Data[indexValue];
       // console.log(curPokemon);
       handleRandomData(curPokemon);
     }
-  }, [randTeamData, indexValue]);
+  }, [Data, indexValue]);
 
   const handleRandomData = (curPokemon) =>{
     const ID = curPokemon.ID;
