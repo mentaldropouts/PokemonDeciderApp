@@ -18,3 +18,12 @@ to run:
 2. use command "npm start" for frontend
 3. use command "npm run start-backend" for backend
 
+### User Interface
+<img src="UI.png"
+     alt="Example of UI"
+     style="float: left; margin-right: 10px;" />
+
+<p>&nbsp;</p>
+
+##### Tips: 
+* Use the Random button first then change the pokemon accordingly so that the backend gets all the data in one packet instead of individually.
