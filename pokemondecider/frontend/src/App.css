@@ -100,10 +100,29 @@ html{
   margin-right: auto;
 }
 
+.image{
+  display: flex;
+  height: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .imageContainer{
   background-color: rgb(220, 220, 220);
   height: 50%;
+  /* margin-bottom: 10px; */
+}
+
+.imageContainerBest{
+  background-color: rgb(220, 220, 220);
+  height: 200px;
+  width: 225px;
   margin-bottom: 10px;
+  border-radius: 10px;
+  border: #e75c37;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #e75c37;
 }
 
 .sixthholder{
@@ -111,10 +130,7 @@ html{
   margin-top: auto;
   margin-bottom: auto;
   display: flex;
-  
-
 }
-
 
 .statsholder{
   padding: 1%;
@@ -124,7 +140,6 @@ html{
   margin-top: auto;
   margin-bottom:auto;
 }
-
 
 .bestholder{
   padding: 1%;
@@ -147,7 +162,6 @@ html{
   height: 500px;
 
 }
-
 
 .statsholderContainer{
   display: flex 1;
@@ -206,10 +220,9 @@ html{
 .name1{
   text-align: center;
   padding: 10px;
+  font-size: 12px;
   background-color: #83b1da;
   height:fit-content;
-  margin-top:10px;
-  margin-bottom: 10px;
 }
 
 .bestPokemon{

@@ -56,7 +56,7 @@ def button_pressed():
         print(f"An error occurred: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
-@api.route('/PokeData', methods=['POST', 'OPT   IONS'])
+@api.route('/PokeData', methods=['POST', 'OPTIONS'])
 def receive_data_from_frontend():
     if request.method == 'OPTIONS':
         # Handle preflight request

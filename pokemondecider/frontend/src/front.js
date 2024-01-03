@@ -16,7 +16,7 @@ function PokemonDropdown( { label, Data } ) {
     speed: "0",
     type1: "",
     type2: "",
-    image: 'pkmnSprites/pkmn0.png',
+    image: 'pkmnSprites/pkmn4.png',
     label: {label}
   });
 
@@ -24,6 +24,7 @@ function PokemonDropdown( { label, Data } ) {
   useEffect(() => {   
     // Handle changes in Data
     if (Data && Data.length > indexValue) {
+      console.log("INDEX: ", indexValue);
       let curPokemon = Data[indexValue];
       // console.log(curPokemon);
       handleRandomData(curPokemon);
@@ -52,6 +53,7 @@ function PokemonDropdown( { label, Data } ) {
   // handles dropdown operations
   const handleSlottingData = (event) => {
     const ID = event.target.value;
+
     setSelectedPokemonData({
       name: statData[ID].Name,
       id: ID,
@@ -71,6 +73,9 @@ function PokemonDropdown( { label, Data } ) {
 
       // Shartending the name of the pokemon to be displayed
       const onDataChange = (event) => {
+        const name = event.target.value;
+        console.log("NAME", name
+          );
         handleSlottingData(event);
       };
 
@@ -86,15 +91,14 @@ function PokemonDropdown( { label, Data } ) {
         <div>Pokemon {label}</div>
         <label htmlFor="pokemonSelect"></label>
         {/* Select menu for selecting any of the imported pokemon */}
-        <select id="pokemonSelect" onChange={onDataChange} value={selectedPokemonData.name}>
-          <option value="">{selectedPokemonData.name}</option>
-          {Object.keys(statData).map((id) => (
-            // Putting the ID with the name so we can pull other info
-            <option key={id} value={id}>
-              {statData[id].Name}
-            </option>
-          ))}
-        </select>
+        <select id="pokemonSelect" onChange={onDataChange} value={selectedPokemonData.id}>
+  <option value="" disabled>Select a Pokémon</option>
+  {Object.keys(statData).map((id) => (
+    <option key={id} value={id}>
+     {id}:{statData[id].Name}
+    </option>
+  ))}
+</select>
         <div class="imageContainer">
             <img class="image" src={selectedPokemonData.image} alt={selectedPokemonData.name} />
             <div class="name"> {selectedPokemonData.name}</div>

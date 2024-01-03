@@ -15,10 +15,12 @@ const [selectedPokemonData, setSelectedPokemonData] = useState({
     }, [selectedPokemonData]);
   
   return (
-        <div>
-          <div class="imageContainer">
+        <div class="sixthholder">
+          <div class='imageContainerBorder'>
+            <div class="imageContainerBest">
               <img class="image" src={selectedPokemonData.image} alt={selectedPokemonData.name} />
-              <div class="name"> {selectedPokemonData.name}</div>
+              <div class="name1"> {selectedPokemonData.name}</div>
+            </div>
           </div>
         </div>
         )};

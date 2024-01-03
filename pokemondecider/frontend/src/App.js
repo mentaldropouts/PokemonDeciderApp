@@ -14,6 +14,7 @@ function App() {
   let bestPokemonArray = [];
   const [ElementsCreated,setElementsCreated] = useState(false);
   const [RandTeam, setRandTeam] = useState();
+  let root = null;
 
   useEffect(() => {
     const submitButton = document.getElementById('submitButton');
@@ -27,8 +28,6 @@ function App() {
 
 
 function createElementsAsync(){
-  const elementContainer = document.getElementById('elementContainer');
-  const root = createRoot(elementContainer);
   return new Promise((resolve, reject) => {
     console.log("Number of elements to create: ", bestPokemonArray.length);
     const numberOfElements = bestPokemonArray.length;
@@ -39,16 +38,19 @@ function createElementsAsync(){
         // console.log("Image: ", bestPokemonArray[i - 1]['image']);
         // const key = `bestPokemon_${i}`;
         const { name, id, image } = bestPokemonArray[i - 1];
-          
+        if(!root){
+          const elementContainer = document.getElementById('elementContainer');
+          root = createRoot(elementContainer);
+        }
+        if (root){
           root.render(
             <BestPokemon
               dataName={name}
               dataNumber={id}
               dataPicture={image}
             />
-
-          
-        );
+          );
+        }
     }
     setElementsCreated(true);
     // Resolve the promise to indicate success
@@ -139,8 +141,11 @@ async function findKeyByValue(obj, value) {
             <div class="buttonRow">
               <button class="Button" id ="8" onClick={handleTeamDataRandom}>Random</button>
               <button class="Button" id ="submitButton" data={bestPokemonArray} onClick={handleTeamDataLoaded}>Submit</button>
+              <div id="elementContainer"></div>
             </div>
-            <div id="elementContainer"></div>
+            <div>
+
+            </div>
         </div>
     </div>
   );
